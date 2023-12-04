@@ -1,6 +1,7 @@
 package com.grigoBiteUI.controller;
 
-import com.grigoBiteUI.dto.canteen.RequestCUTenant;
+import com.grigoBiteUI.dto.canteen.RequestCTenant;
+import com.grigoBiteUI.dto.canteen.RequestUTenant;
 import com.grigoBiteUI.model.CanteenList.Tenant;
 import com.grigoBiteUI.service.CanteenList.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,19 @@ public class TenantController {
 
     @PostMapping("/create/{canteenId}")
     @PreAuthorize("hasAuthority('tenant:crud')")
-    public ResponseEntity<Tenant> createTenant(@PathVariable Long canteenId, @RequestBody RequestCUTenant requestCUTenant) {
-        Tenant createdTenant = tenantService.createTenant(canteenId, requestCUTenant);
+    public ResponseEntity<Tenant> createTenant(@PathVariable Long canteenId, @RequestBody RequestCTenant requestCTenant) {
+        Tenant createdTenant = tenantService.createTenant(canteenId, requestCTenant);
         return new ResponseEntity<>(createdTenant, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{canteenId}/{id}")
     @PreAuthorize("hasAnyAuthority('tenant:crud')")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable Long id, @RequestBody RequestCUTenant requestCUTenant) {
-        Tenant updatedTenant = tenantService.updateTenant(id, requestCUTenant);
+    public ResponseEntity<Tenant> updateTenant(@PathVariable Long id, @RequestBody RequestUTenant requestUTenant) {
+//        if (!isAuthenticatedUserOwnerOfTenant(authentication, id)) {
+//            // If the user is not the owner, deny the update
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+        Tenant updatedTenant = tenantService.updateTenant(id, requestUTenant);
         return new ResponseEntity<>(updatedTenant, HttpStatus.OK);
     }
 
@@ -56,4 +61,11 @@ public class TenantController {
         tenantService.deleteTenantById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    private boolean isAuthenticatedUserOwnerOfTenant(Authentication authentication, Long tenantId) {
+//        // Add logic to check if the authenticated user is the owner of the Tenant
+//        // For example, fetch the Tenant entity and compare it with the authenticated user
+//        Optional<Tenant> optionalTenant = tenantService.getTenantById(tenantId);
+//        return optionalTenant.isPresent() && optionalTenant.get().getOwner().getUsername().equals(authentication.getName());
+//    }
 }

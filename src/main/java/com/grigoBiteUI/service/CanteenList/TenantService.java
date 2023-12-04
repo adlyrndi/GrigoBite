@@ -1,12 +1,15 @@
 package com.grigoBiteUI.service.CanteenList;
 
-import com.grigoBiteUI.dto.canteen.RequestCUTenant;
+import com.grigoBiteUI.dto.canteen.RequestCTenant;
+import com.grigoBiteUI.dto.canteen.RequestUTenant;
 import com.grigoBiteUI.exceptions.CanteenNotFoundException;
 import com.grigoBiteUI.exceptions.TenantNotFoundException;
 import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.model.CanteenList.Tenant;
+import com.grigoBiteUI.model.auth.Penjual;
 import com.grigoBiteUI.repository.CanteenRepository;
 import com.grigoBiteUI.repository.TenantRepository;
+import com.grigoBiteUI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,13 @@ public class TenantService {
     private final TenantRepository tenantRepository;
     private final CanteenRepository canteenRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public TenantService(TenantRepository tenantRepository, CanteenRepository canteenRepository) {
+    public TenantService(TenantRepository tenantRepository, CanteenRepository canteenRepository, UserRepository userRepository) {
         this.tenantRepository = tenantRepository;
         this.canteenRepository = canteenRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Tenant> getAllTenants(Long id) {
@@ -33,17 +39,17 @@ public class TenantService {
         return tenantRepository.findByIdAndCanteenId(id, canteenId);
     }
 
-    public Tenant createTenant(Long canteenId, RequestCUTenant requestCUTenant) {
+    public Tenant createTenant(Long canteenId, RequestCTenant requestCTenant) {
         Canteen canteen = getCanteenById(canteenId);
-        Tenant tenant = mapRequestToTenant(requestCUTenant);
+        Tenant tenant = mapRequestToTenant(requestCTenant);
         tenant.setCanteen(canteen);
         return tenantRepository.save(tenant);
     }
 
-    public Tenant updateTenant(Long id, RequestCUTenant requestCUTenant) {
+    public Tenant updateTenant(Long id, RequestUTenant requestUTenant) {
         Tenant existingTenant = tenantRepository.findById(id)
                 .orElseThrow(() -> new TenantNotFoundException("Tenant with ID " + id + " not found"));
-        mapRequestToExistingTenant(requestCUTenant, existingTenant);
+        mapRequestToExistingTenant(requestUTenant, existingTenant);
         return tenantRepository.save(existingTenant);
     }
 
@@ -60,17 +66,17 @@ public class TenantService {
                 .orElseThrow(() -> new CanteenNotFoundException("Canteen with ID " + canteenId + " not found"));
     }
 
-    private Tenant mapRequestToTenant(RequestCUTenant requestCUTenant) {
+    private Tenant mapRequestToTenant(RequestCTenant requestCTenant) {
+        Penjual penjual = (Penjual) userRepository.findById(requestCTenant.getIdPenjual());
         return Tenant.builder()
-                .namaTenant(requestCUTenant.getNamaTenant())
-                .deskripsiTenant(requestCUTenant.getDeskripsiTenant())
-                .namaPenjual(requestCUTenant.getNamaPenjual())
+                .namaTenant(requestCTenant.getNamaTenant())
+                .deskripsiTenant(requestCTenant.getDeskripsiTenant())
+                .penjual(penjual)
                 .build();
     }
 
-    private void mapRequestToExistingTenant(RequestCUTenant requestCUTenant, Tenant existingTenant) {
-        existingTenant.setNamaTenant(requestCUTenant.getNamaTenant());
-        existingTenant.setDeskripsiTenant(requestCUTenant.getDeskripsiTenant());
-        existingTenant.setNamaPenjual(requestCUTenant.getNamaPenjual());
+    private void mapRequestToExistingTenant(RequestUTenant requestUTenant, Tenant existingTenant) {
+        existingTenant.setNamaTenant(requestUTenant.getNamaTenant());
+        existingTenant.setDeskripsiTenant(requestUTenant.getDeskripsiTenant());
     }
 }
