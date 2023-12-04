@@ -44,4 +44,7 @@ public class Pesanan {
     private void calculateTotalPesanan() {
         this.totalPesanan = listMakanan.stream().mapToDouble(Menu::getHarga).sum();
     }
+
+    @OneToOne
+    private Feedback feedback;
 }
