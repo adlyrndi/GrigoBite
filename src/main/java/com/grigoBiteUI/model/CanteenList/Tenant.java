@@ -1,5 +1,6 @@
 package com.grigoBiteUI.model.CanteenList;
 
+import com.grigoBiteUI.model.auth.Penjual;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,8 @@ public class Tenant {
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> listMenu;
 
-    private String namaPenjual;
+    @OneToOne
+    private Penjual penjual;
     @ManyToOne
     private Canteen canteen;
 
