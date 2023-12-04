@@ -1,18 +1,21 @@
 package com.grigoBiteUI.model.auth;
 
-import com.grigoBiteUI.model.Pesanan;
 import com.grigoBiteUI.model.CanteenList.Tenant;
-import jakarta.persistence.*;
+import com.grigoBiteUI.model.Pesanan;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
