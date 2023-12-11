@@ -1,6 +1,5 @@
 package com.grigoBiteUI.repository;
 
-import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.model.Feedback;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
@@ -15,4 +14,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
     List<Feedback> findByIdPenjual(Long idPenjual);
     Optional<Feedback> findById(Long id);
+
+    Optional<Feedback> findByIdPesanan(Long idPesanan);
 }

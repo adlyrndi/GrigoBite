@@ -1,5 +1,6 @@
 package com.grigoBiteUI.service;
 
+import com.grigoBiteUI.dto.RequestFeedback;
 import com.grigoBiteUI.model.Pesanan;
 import com.grigoBiteUI.model.Feedback;
 import com.grigoBiteUI.repository.FeedbackRepository;
@@ -21,16 +22,15 @@ public class FeedbackService {
         this.pesananRepository = pesananRepository;
     }
 
-    public Feedback createFeedback(Long idPenjual, Long idPembeli, Long idPesanan, int rating, String komentar) {
-        // Fetching associated entities
-        Pesanan pesanan = pesananRepository.findById(idPesanan).orElse(null);
-
+    public Feedback createFeedback(RequestFeedback requestFeedback) {
         // Creating feedback
+        Pesanan pesanan = pesananRepository.getReferenceById(requestFeedback.getIdPesanan());
+
         Feedback feedback = Feedback.builder()
-                .idPenjual(idPenjual)
-                .idPembeli(idPembeli)
-                .rating(rating)
-                .komentar(komentar)
+                .idPenjual(requestFeedback.getIdPenjual())
+                .idPembeli(requestFeedback.getIdPembeli())
+                .rating(requestFeedback.getRating())
+                .komentar(requestFeedback.getKomentar())
                 .pesanan(pesanan)
                 .build();
 
@@ -45,8 +45,8 @@ public class FeedbackService {
         return feedbackRepository.findById(feedbackId).orElse(null);
     }
 
-    public Feedback getFeedbackByPesanan(Pesanan pesanan){
-        return feedbackRepository.findById(pesanan.getId()).orElse(null);
+    public Feedback getFeedbackByIdPesanan(Long pesananId){
+        return feedbackRepository.findByIdPesanan(pesananId).orElse(null);
     }
 
     public List<Feedback> getFeedbackByPenjual(Long idPenjual){

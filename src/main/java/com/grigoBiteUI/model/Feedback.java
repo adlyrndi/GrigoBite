@@ -22,7 +22,7 @@ public class Feedback {
     private int rating;
     private String komentar;
 
-    @ManyToOne
+    @OneToOne
     private Pesanan pesanan;
 }
 
