@@ -1,55 +1,507 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome To GrigoBiteUI Dashboard</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+<html lang="en">
+<style>
+    /* -----import FONT------- */
+    @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
 
-        .dashboard {
+    /* -----Variables CSS------- */
+    :root {
+        --header-height: 3rem;
+
+        --first-color: #d17f47;
+        --nav-color : #423e57;
+        --first-color-darker: rgb(255,140,0);
+        --first-color-alt: rgb(44, 68, 100);
+        --test: #FF4500;
+        --first-color-alt-dark: rgb(63, 17, 31);
+        --title-color: #382f2f;
+        --text-color: #3a2d2d;
+        --text-color-light: #FFFFFF;
+        --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        --container-color: rgb(253, 222, 224);
+
+        /* Font & Typography */
+        --font: 'BioRhyme', serif;
+        --h1-size: 1.5rem;
+        --h2-size: 1.25rem;
+        --h3-size: 1rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+        --normal-font-size: .938rem;
+        --biggest-font-size: 2.25rem;
+
+        /* Font Weight */
+        --font-regular: 400;
+        --font-bold: 700;
+
+        /* Margin */
+        --margin-1: .5rem;
+        --margin-2: 1rem;
+        --margin-3: 1.5rem;
+        --margin-4: 2rem;
+        --margin-5: 2.5rem;
+        --margin-6: 3rem;
+
+        /* Z-index */
+        --z-tooltip: 10;
+        --z-fixed: 100;
+    }
+
+    body.dark-theme {
+        --first-color: rgb(207, 89, 99);
+        --title-color: rgb(241, 228, 230);
+        --text-color:rgb(206, 190, 191);
+        --body-color: rgb(15, 12, 13);
+        --container-color: rgb(34, 27, 30);
+    }
+
+
+
+    /* ----- GENERAL ------- */
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font);
+        font-size: var(--normal-font-size);
+        color: var(--text-color);
+        margin: var(--header-height) 0 0 0;
+        background: var(--body-color);
+        line-height: 1.6;
+    }
+
+
+    h1, h2, h3 {
+        margin: 0;
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    img {
+        /* max-width: 100%; */
+        max-height: 90%;
+        /* width: auto; */
+        /* height: auto; */
+    }
+
+    .letter {
+        display: inline-block;
+        color: var(--first-color-alt);
+    }
+
+    /* ----- Nav ------- */
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1024px;
+        height: var(--header-height);
+    }
+
+    @media screen and (max-width: 768px) {
+        .nav-menu {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 0 1rem;
             text-align: center;
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: var(--first-color-alt);
+            transition: .4s;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, .1);
+            border-radius: 0 0 1rem 1rem;
+            z-index: var(--z-fixed);
+        }
+    }
+
+    .nav-item {
+        margin-bottom: var(--margin-2);
+    }
+
+    .nav-link, .nav-toggle {
+        color: var(--first-color-alt);
+        font-weight: var(--font-bold);
+    }
+
+
+    .nav-logo {
+        color: var(--first-color);
+        font-weight: var(--font-bold);
+        font-size: larger;
+    }
+
+    .nav-link {
+        transition: .3s;
+    }
+
+    .nav-toggle {
+        font-size: 1.3rem;
+        cursor: pointer;
+    }
+
+    .nav-link:hover {
+        color: var(--first-color-alt);
+    }
+
+    .nav-logo:hover {
+        color: var(--first-color-alt);
+    }
+
+    /* ----- SHOW MENU ------- */
+    .show-menu {
+        top: var(--header-height);
+    }
+
+    .active-link {
+        color: var(--first-color-alt);
+    }
+
+    /* ------ CHANGE BACkGROUND HEADER ------- */
+    .scroll-header {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    }
+
+    /* ------ SCROLL TOP ------- */
+
+    .scroll_top {
+        position: fixed;
+        right: 1rem;
+        bottom: -20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .3rem;
+        background-color: rgb(207, 89, 99);
+        border-radius: .4rem;
+        z-index: var(--z-tooltip);
+        transition: .4s;
+        visibility: hidden;
+    }
+
+    .scroll_top:hover {
+        background-color: var(--first-color-alt);
+    }
+
+    .scroll_top_icon {
+        font-size: 1.8rem;
+        color: var(--body-color);
+    }
+
+    .show-scroll {
+        visibility: visible;
+        bottom: 1.5rem;
+    }
+
+
+    /* ----- Sections ------- */
+
+    .section {
+        padding: 4rem 0 2rem;
+    }
+
+    .title, .subtitle {
+        text-align: center;
+    }
+
+    .title {
+        font-size: var(--h1-size);
+        color: var(--title-color);
+        margin-bottom: var(--margin-3);
+    }
+
+    .subtitle {
+        display: block;
+        font-weight: var(--font-regular);
+        color: var(--first-color);
+        margin-bottom: var(--margin-1);
+    }
+
+    /* ----- Container & header ------- */
+
+    .menu-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1d204d;
+        z-index: var(--z-fixed);
+    }
+
+    .body-container {
+        width: calc(100% - 2rem);
+        max-width: 960px;
+        margin-left: var(--margin-2);
+        margin-right: var(--margin-2);
+    }
+
+    .body-grid {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    /* ----- Home ------- */
+
+    .home-container {
+        height: calc(100vh - var(--header-height));
+        align-content: center;
+    }
+
+    .home-title {
+        margin-bottom: var(--margin-1);
+        font-size: var(--biggest-font-size);
+        color: var(--first-color);
+        text-align: center;
+    }
+
+    .home-subtitle {
+        margin-bottom: var(--margin-4);
+        font-size: var(--h1-size);
+        color: var(--text-color-light);
+        text-align: center;
+    }
+
+    .home-img {
+        width: 300px;
+        justify-self: center;
+    }
+
+    .btn-menu {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* ------ Button ------- */
+
+    .button {
+        display: inline-block;
+        padding: .75rem 1rem;
+        background-color: var(--first-color);
+        color: var(--body-color);
+        border-radius: .5rem;
+        text-align:center
+    }
+
+    .button:hover {
+        background-color: var(--first-color-alt);
+    }
+    .button-nav {
+        display: inline-block;
+        padding: .75rem 1rem;
+        background-color: var(--first-color);
+        color: #FFFFFF;
+        border-radius: .5rem;
+        text-align:center
+    }
+
+
+
+    /*========== MEDIA QUERIES ==========*/
+
+    /* Variables */
+    @media screen and (min-width: 768px) {
+        :root {
+            --h1-size: 2.25rem;
+            --h2-size: 1.5rem;
+            --h3-size: 1.25rem;
+            --small-font-size: .875rem;
+            --smaller-font-size: .813rem;
+            --normal-font-size: 1rem;
+            --biggest-font-size: 4rem;
+        }
+    }
+
+
+    @media screen and (min-width: 576px) {
+        .home-title {
+            font-size: 2rem;
         }
 
-        h1 {
-            color: #333;
+        .home-container,
+        .about-container,
+        .app-container {
+            grid-template-columns: repeat(2, 1fr);
+            align-items: center;
         }
 
-        .slogan {
-            color: #555;
-            margin-top: 1rem;
+
+
+    }
+
+    @media screen and (min-width: 768px) {
+        body {
+            margin: 0;
         }
 
-        .link {
-            display: block;
-            margin-top: 1rem;
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
+        .section {
+            padding-top: 8rem;
         }
-    </style>
+
+        .nav-container {
+            height: calc(var(--header-height) + 1.5rem);
+        }
+
+        .nav-list {
+            display: flex;
+        }
+
+        .nav-item {
+            margin-left: var(--margin-5);
+            margin-bottom: 0;
+        }
+
+        .nav-toggle {
+            display: none;
+        }
+
+        .dark-light {
+            position: initial;
+            margin-left: var(--margin-2);
+        }
+
+        .home-title {
+            font-size: 2rem;
+        }
+
+        .home-container {
+            height: 100vh;
+            justify-items: right;
+        }
+    }
+
+    @media screen and (min-width: 960px) {
+        .home-title {
+            font-size: var(--biggest-font-size);
+        }
+
+        .body-container {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .home-img {
+            width: 500px;
+        }
+
+        .about-container,
+        .app-container {
+            column-gap: 7rem;
+        }
+    }
+    .home {
+        position: relative;
+        height: 100vh; /* Adjust the height as needed */
+        background-size: cover;
+        background-position: center;
+        color: #fff; /* Text color */
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+
+    .home-container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .home-data {
+        position:relative;
+        z-index: 2;
+        margin-left: 20%;
+    }
+
+    .home-title {
+        font-size: 2.5em; /* Adjust the font size as needed */
+    }
+
+    .home-subtitle {
+        font-size: 1.5em; /* Adjust the font size as needed */
+        margin-top: 10px; /* Adjust spacing as needed */
+    }
+
+    .container-type{
+        display: inline-block;
+    }
+    .typed-out{
+        overflow: hidden;
+        white-space: nowrap;
+        animation:
+                typing 3s forwards;
+        font-size: 1.6rem;
+        width: 0;
+        margin: 0 auto;
+    }
+    .typed-out-delayed{
+        overflow: hidden;
+        /* border-right: .10em solid orange; */
+        white-space: nowrap;
+        animation:
+                typing 3s forwards;
+        animation-delay: 1.25s;
+        font-size: 1.6rem;
+        width: 0;
+        margin: 0 auto;
+    }
+    @keyframes typing {
+        from { width: 0% }
+        to { width: 100% }
+    }
+</style>
+<head>
+    <meta charset="utf-8">
+    <title>GrigoBite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="dashboard">
-    <h1>Welcome To GrigoBiteUI</h1>
-    <p class="slogan">Don't have an account? Register here!</p>
-    <a th:href="@{/auth/register}" class="link">Register</a>
-    <p class="slogan">Already have an account? Log in here!</p>
-    <a th:href="@{/auth/login}" class="link">Log In</a>
-</div>
+<a href="#" class="scroll_top" id="scroll-top">
+    <i class='bx bx-chevrons-up scroll_top_icon'></i>
+</a>
+
+<!-- Header -->
+<header id="header" class="menu-header">
+    <nav class="nav-container body-container">
+        <a href="#" class="nav-logo">GRIGOBITE</a>
+
+        <div class="nav-menu" id="nav-menu-id">
+            <ul class="nav-list">
+                <a th:href="@{/auth/register-login}" class="button-nav btn-nav">Login</a>
+            </ul>
+        </div>
+
+        <div class="nav-toggle" id="nav-toggle">
+            <i class='bx bx-menu'></i>s
+        </div>
+    </nav>
+</header>
+<main>
+    <!-- Home -->
+    <section class="home" id="home">
+        <div class=" body-container body-grid">
+            <div class="home-data" style="text-align: center; margin: 0; padding: 0 0 0 20px;">
+                <h1 class="home-title" style="text-align: center;"><span class="letter">G</span>rigo Bite</h1>
+                <h2 class="typed-out ">Order with Ease,</h2><br><h2 class="typed-out-delayed"> Savour with Joy! </h2></br>
+                <div class="btn-menu">
+                    <a th:href="@{/auth/register-login}" class="button btn-menu">Order Now!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Scroll Reveal -->
+<script src="https://unpkg.com/scrollreveal"></script>
 </body>
 </html>
