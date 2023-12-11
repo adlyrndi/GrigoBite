@@ -10,6 +10,7 @@ public interface PesananRepository extends JpaRepository<Pesanan, Long> {
 
     @NonNull
     List<Pesanan> findAll();
+
     Pesanan findById(long id);
 
     List<Pesanan> findByPembeliId(long pembeliId);
