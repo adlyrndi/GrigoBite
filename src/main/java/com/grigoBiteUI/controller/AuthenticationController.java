@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,5 +35,10 @@ public class AuthenticationController {
             HttpServletRequest request
     ) {
         return ResponseEntity.ok(authenticationService.getUser(request));
+    }
+
+    private static void getCurrentUser() {
+        System.out.println(SecurityContextHolder.getContext()
+                .getAuthentication());
     }
 }

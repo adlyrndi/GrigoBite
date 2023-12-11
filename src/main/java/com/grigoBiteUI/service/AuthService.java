@@ -4,6 +4,7 @@ import com.grigoBiteUI.dto.*;
 import com.grigoBiteUI.exceptions.UsernameAlreadyExistsException;
 import com.grigoBiteUI.model.auth.User;
 import com.grigoBiteUI.repository.UserRepository;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,7 @@ public class AuthService {
     private User buildUserFromRegisterRequest(RequestRegister request) {
         return User.builder()
                 .username(request.getUsername())
+                .nickname(request.getNickname())
                 .active(true)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())

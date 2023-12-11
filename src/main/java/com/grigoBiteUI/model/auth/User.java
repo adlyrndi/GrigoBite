@@ -41,7 +41,13 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if(role.equals("ADMIN")) {
+            return ApplicationUserRole.ADMIN.getGrantedAuthority();
+        } else if (role.equals("PEMBELI")){
+            return ApplicationUserRole.PEMBELI.getGrantedAuthority();
+        } else {
+            return ApplicationUserRole.PENJUAL.getGrantedAuthority();
+        }
     }
 
     @JsonIgnore
