@@ -9,7 +9,7 @@ public enum ApplicationUserPermission {
 
     CAN_CRUD_CANTEEN("canteen:crud"),
     CAN_CRUD_TENANT("tenant:crud"),
-    CAN_RU_TENANT("tenant:ru"),
+    CAN_CRU_TENANT("tenant:cru"),
     CAN_CRUD_MENU("menu:crud"),
     CAN_UD_PESANAN("pesanan:ud");
 

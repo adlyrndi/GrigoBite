@@ -1,19 +1,19 @@
 package com.grigoBiteUI.controller;
 
-import com.grigoBiteUI.dto.canteen.RequestCTenant;
-import com.grigoBiteUI.dto.canteen.RequestUTenant;
+import com.grigoBiteUI.dto.canteen.RequestCUTenant;
 import com.grigoBiteUI.model.CanteenList.Tenant;
 import com.grigoBiteUI.service.CanteenList.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api/tenants")
 public class TenantController {
 
@@ -38,20 +38,20 @@ public class TenantController {
     }
 
     @PostMapping("/create/{canteenId}")
-    @PreAuthorize("hasAuthority('tenant:crud')")
-    public ResponseEntity<Tenant> createTenant(@PathVariable Long canteenId, @RequestBody RequestCTenant requestCTenant) {
-        Tenant createdTenant = tenantService.createTenant(canteenId, requestCTenant);
-        return new ResponseEntity<>(createdTenant, HttpStatus.CREATED);
+    @PreAuthorize("hasAnyAuthority('tenant:crud', 'tenant:cru')")
+    public ResponseEntity<Tenant> createTenant(@PathVariable Long canteenId, @RequestBody RequestCUTenant requestCUTenant) {
+        Tenant createdTenant = tenantService.createTenant(canteenId, requestCUTenant);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{canteenId}/{id}")
-    @PreAuthorize("hasAnyAuthority('tenant:crud')")
-    public ResponseEntity<Tenant> updateTenant(@PathVariable Long id, @RequestBody RequestUTenant requestUTenant) {
+    @PreAuthorize("hasAnyAuthority('tenant:crud', 'tenant:cru')")
+    public ResponseEntity<Tenant> updateTenant(@PathVariable Long id, @RequestBody RequestCUTenant requestCUTenant) {
 //        if (!isAuthenticatedUserOwnerOfTenant(authentication, id)) {
 //            // If the user is not the owner, deny the update
 //            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 //        }
-        Tenant updatedTenant = tenantService.updateTenant(id, requestUTenant);
+        Tenant updatedTenant = tenantService.updateTenant(id, requestCUTenant);
         return new ResponseEntity<>(updatedTenant, HttpStatus.OK);
     }
 
@@ -68,4 +68,6 @@ public class TenantController {
 //        Optional<Tenant> optionalTenant = tenantService.getTenantById(tenantId);
 //        return optionalTenant.isPresent() && optionalTenant.get().getOwner().getUsername().equals(authentication.getName());
 //    }
+
+
 }

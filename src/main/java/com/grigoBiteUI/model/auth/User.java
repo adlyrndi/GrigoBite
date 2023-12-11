@@ -27,11 +27,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    @Nullable
     private String nickname;
 
     @JsonIgnore
     private String password;
-
 
     private String phoneNumber;
 

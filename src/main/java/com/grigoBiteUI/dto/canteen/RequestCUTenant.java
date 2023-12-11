@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestCTenant {
+public class RequestCUTenant {
     private String namaTenant;
     private String deskripsiTenant;
-    private Long idPenjual;
 }

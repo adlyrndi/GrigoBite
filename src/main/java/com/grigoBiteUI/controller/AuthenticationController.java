@@ -1,44 +1,54 @@
 package com.grigoBiteUI.controller;
 
-import com.grigoBiteUI.dto.*;
+import com.grigoBiteUI.dto.RequestLogin;
+import com.grigoBiteUI.dto.RequestRegister;
+import com.grigoBiteUI.dto.ResponseLogin;
+import com.grigoBiteUI.dto.ResponseRegister;
+import com.grigoBiteUI.dto.ResponseUser;
 import com.grigoBiteUI.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@RequestMapping("/api/v1/auth")
+@Controller
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
+
+    @GetMapping(path = "/register")
+    public String registerPage(Model model) {
+        return "register";
+    }
+
+    @GetMapping(path = "/login")
+    public String loginPage(Model model) {
+        return "login";
+    }
+
     @Autowired
     private AuthService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseRegister> register (
-            @RequestBody RequestRegister request
-    ) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public String register(Model model, RequestRegister request) {
+        authenticationService.register(request);
+        return "redirect:/auth/login";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseLogin> login (
-            @RequestBody RequestLogin request
-    ) {
-        return ResponseEntity.ok(authenticationService.login(request));
+    public String login(Model model, RequestLogin request) {
+        authenticationService.login(request);
+        return "redirect:/home";
     }
 
     @GetMapping("/user")
-    public ResponseEntity<ResponseUser> user (
-            HttpServletRequest request
-    ) {
-        return ResponseEntity.ok(authenticationService.getUser(request));
-    }
-
-    private static void getCurrentUser() {
-        System.out.println(SecurityContextHolder.getContext()
-                .getAuthentication());
+    public String user(Model model, HttpServletRequest request) {
+        ResponseUser responseUser = authenticationService.getUser(request);
+        model.addAttribute("user", responseUser);
+        return "user";
     }
 }

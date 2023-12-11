@@ -11,12 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api/canteens")
 public class CanteenListController {
 
@@ -50,6 +51,7 @@ public class CanteenListController {
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('canteen:crud')")
     public ResponseEntity<Canteen> updateCanteen(@PathVariable Long id, @RequestBody RequestCUCanteen requestCUCanteen) {
+        System.out.println("tes");
         Canteen updatedCanteen = canteenListService.updateCanteen(id, requestCUCanteen);
         return ResponseEntity.ok(updatedCanteen);
     }

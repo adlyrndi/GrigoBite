@@ -1,16 +1,19 @@
 package com.grigoBiteUI.service.CanteenList;
 
-import com.grigoBiteUI.dto.canteen.RequestCTenant;
-import com.grigoBiteUI.dto.canteen.RequestUTenant;
+import com.grigoBiteUI.dto.canteen.RequestCUTenant;
 import com.grigoBiteUI.exceptions.CanteenNotFoundException;
 import com.grigoBiteUI.exceptions.TenantNotFoundException;
 import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.model.CanteenList.Tenant;
 import com.grigoBiteUI.model.auth.Penjual;
+import com.grigoBiteUI.model.auth.User;
 import com.grigoBiteUI.repository.CanteenRepository;
 import com.grigoBiteUI.repository.TenantRepository;
 import com.grigoBiteUI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,17 +42,25 @@ public class TenantService {
         return tenantRepository.findByIdAndCanteenId(id, canteenId);
     }
 
-    public Tenant createTenant(Long canteenId, RequestCTenant requestCTenant) {
+    public Tenant createTenant(Long canteenId, RequestCUTenant requestCUTenant) {
         Canteen canteen = getCanteenById(canteenId);
-        Tenant tenant = mapRequestToTenant(requestCTenant);
+        Tenant tenant = mapRequestToTenant(requestCUTenant);
         tenant.setCanteen(canteen);
         return tenantRepository.save(tenant);
     }
 
-    public Tenant updateTenant(Long id, RequestUTenant requestUTenant) {
+    public Tenant updateTenant(Long id, RequestCUTenant requestCUTenant) {
         Tenant existingTenant = tenantRepository.findById(id)
                 .orElseThrow(() -> new TenantNotFoundException("Tenant with ID " + id + " not found"));
-        mapRequestToExistingTenant(requestUTenant, existingTenant);
+
+        if(!getLoggedUser().getRole().equals("ADMIN")){
+            Integer idUser = getLoggedUser().getId();
+            if(!idUser.equals(existingTenant.getPenjual().getId())){
+                throw new RuntimeException("Anda bukan Penjual pemilik tenant ini");
+            }
+        }
+
+        mapRequestToExistingTenant(requestCUTenant, existingTenant);
         return tenantRepository.save(existingTenant);
     }
 
@@ -66,17 +77,29 @@ public class TenantService {
                 .orElseThrow(() -> new CanteenNotFoundException("Canteen with ID " + canteenId + " not found"));
     }
 
-    private Tenant mapRequestToTenant(RequestCTenant requestCTenant) {
-        Penjual penjual = (Penjual) userRepository.findById(requestCTenant.getIdPenjual());
+    private Tenant mapRequestToTenant(RequestCUTenant requestCUTenant) {
+        int idPenjual = getLoggedUser().getId();
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(idPenjual));
+        Penjual penjual = (Penjual) userOptional.get();
         return Tenant.builder()
-                .namaTenant(requestCTenant.getNamaTenant())
-                .deskripsiTenant(requestCTenant.getDeskripsiTenant())
+                .namaTenant(requestCUTenant.getNamaTenant())
+                .deskripsiTenant(requestCUTenant.getDeskripsiTenant())
                 .penjual(penjual)
                 .build();
     }
 
-    private void mapRequestToExistingTenant(RequestUTenant requestUTenant, Tenant existingTenant) {
-        existingTenant.setNamaTenant(requestUTenant.getNamaTenant());
-        existingTenant.setDeskripsiTenant(requestUTenant.getDeskripsiTenant());
+    private void mapRequestToExistingTenant(RequestCUTenant requestCUTenant, Tenant existingTenant) {
+        existingTenant.setNamaTenant(requestCUTenant.getNamaTenant());
+        existingTenant.setDeskripsiTenant(requestCUTenant.getDeskripsiTenant());
+    }
+
+    public User getLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            return (User) authentication.getPrincipal();
+        }
+
+        return null;
     }
 }

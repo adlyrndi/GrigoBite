@@ -2,6 +2,8 @@ package com.grigoBiteUI.service;
 
 import com.grigoBiteUI.dto.*;
 import com.grigoBiteUI.exceptions.UsernameAlreadyExistsException;
+import com.grigoBiteUI.model.auth.Pembeli;
+import com.grigoBiteUI.model.auth.Penjual;
 import com.grigoBiteUI.model.auth.User;
 import com.grigoBiteUI.repository.UserRepository;
 import jakarta.servlet.ServletOutputStream;
@@ -67,15 +69,39 @@ public class AuthService {
 
 
     private User buildUserFromRegisterRequest(RequestRegister request) {
-        return User.builder()
-                .username(request.getUsername())
-                .nickname(request.getNickname())
-                .active(true)
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
-                .phoneNumber(request.getPhoneNumber())
-                .profilePicture(request.getProfilePicture())
-                .build();
+        if(request.getRole().equals("PENJUAL")) {
+            return Penjual.builder()
+                    .username(request.getUsername())
+                    .nickname(request.getNickname())
+                    .active(true)
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(request.getRole())
+                    .phoneNumber(request.getPhoneNumber())
+                    .profilePicture(request.getProfilePicture())
+                    .saldo(0)
+                    .build();
+        } else if(request.getRole().equals("PEMBELI")){
+            return Pembeli.builder()
+                    .username(request.getUsername())
+                    .nickname(request.getNickname())
+                    .active(true)
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(request.getRole())
+                    .phoneNumber(request.getPhoneNumber())
+                    .profilePicture(request.getProfilePicture())
+                    .saldo(0)
+                    .build();
+        } else {
+            return User.builder()
+                    .username(request.getUsername())
+                    .nickname(request.getNickname())
+                    .active(true)
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(request.getRole())
+                    .phoneNumber(request.getPhoneNumber())
+                    .profilePicture(request.getProfilePicture())
+                    .build();
+        }
     }
 
     private void authenticateUser(String username, String password) {
