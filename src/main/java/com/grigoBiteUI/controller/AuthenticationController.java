@@ -42,7 +42,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public String login(Model model, RequestLogin request) {
         authenticationService.login(request);
-        return "redirect:/home";
+        return "redirect:/homepage";
     }
 
     @GetMapping("/user")

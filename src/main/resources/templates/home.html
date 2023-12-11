@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <title>GrigoBite</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To GrigoBiteUI Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/css/style.css">
+        .dashboard {
+            text-align: center;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .slogan {
+            color: #555;
+            margin-top: 1rem;
+        }
+
+        .link {
+            display: block;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<a href="#" class="scroll_top" id="scroll-top">
-    <i class='bx bx-chevrons-up scroll_top_icon'></i>
-</a>
-
-<!-- Header -->
-<header id="header" class="menu-header">
-    <nav class="nav-container body-container">
-        <a href="#" class="nav-logo">GRIGOBITE</a>
-
-        <div class="nav-menu" id="nav-menu-id">
-            <ul class="nav-list">
-                <a href="#" class="button-nav btn-nav">login</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="nav-toggle" id="nav-toggle">
-            <i class='bx bx-menu'></i>s
-        </div>
-    </nav>
-</header>
-<main>
-    <!-- Home -->
-    <section class="home" id="home" style="background-image: url('../static/img/background.jpg');">
-        <div class="home-container body-container body-grid">
-            <div class="home-data" style="text-align: left; margin: 0; padding: 0 0 0 20px;">
-                <h1 class="home-title" style="text-align: left;"><span class="letter">G</span>rigo Bite</h1>
-                <h2 class="home-subtitle" style="text-align: left;">Order with Ease, <br>Savor with Joy! <br> </h2>
-                <div class="btn-menu">
-                    <a href="#" class="button btn-menu">Order Now!</a>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-    <!-- Scroll Reveal -->
-    <script src="https://unpkg.com/scrollreveal"></script>
+<div class="dashboard">
+    <h1>Welcome To GrigoBiteUI</h1>
+    <p class="slogan">Don't have an account? Register here!</p>
+    <a th:href="@{/auth/register}" class="link">Register</a>
+    <p class="slogan">Already have an account? Log in here!</p>
+    <a th:href="@{/auth/login}" class="link">Log In</a>
+</div>
 </body>
 </html>
