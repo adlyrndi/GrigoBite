@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+
+        :root {
+            --header-height: 3rem;
+            --first-color: #d17f47;
+            --nav-color: #423e57;
+            --first-color-darker: rgb(255, 140, 0);
+            --first-color-alt: rgb(44, 68, 100);
+            --test: #FF4500;
+            --first-color-alt-dark: rgb(63, 17, 31);
+            --title-color: #382f2f;
+            --text-color: #3a2d2d;
+            --text-color-light: #FFFFFF;
+            --newcolor: #24243e;
+            --container-color: rgb(253, 222, 224);
+            --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            --color-item : #2c4464;
+
+            /* Font & Typography */
+            --font: 'BioRhyme', serif;
+            --h1-size: 1.5rem;
+            --h2-size: 1.25rem;
+            --h3-size: 1rem;
+            --small-font-size: .813rem;
+            --smaller-font-size: .75rem;
+            --normal-font-size: .938rem;
+            --biggest-font-size: 2.25rem;
+
+            /* Font Weight */
+            --font-regular: 400;
+            --font-bold: 700;
+
+            /* Margin */
+            --margin-1: .5rem;
+            --margin-2: 1rem;
+            --margin-3: 1.5rem;
+            --margin-4: 2rem;
+            --margin-5: 2.5rem;
+            --margin-6: 3rem;
+
+            /* Z-index */
+            --z-tooltip: 10;
+            --z-fixed: 100;
+        }
+
+        .bodycolor {
+            background-color: var(--newcolor);
+        }
+
+        body {
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            font-family: var(--font);
+            font-size: var(--normal-font-size);
+            color: var(--text-color);
+            scrollbar-width: thin;
+            scrollbar-color: var(--first-color) var(--text-color-light);
+        }
+
+
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 100vh !important;
+            }
+        }
+
+        /* Adjusted card styles */
+        .card {
+            background-color: var(--color-item);
+            border: 2px solid var(--text-color-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: var(--text-color-light);
+            width: 120%; /* Sesuaikan lebar kartu sesuai keinginan Anda */
+            margin: 0 auto; /* Untuk membuatnya menjadi kartu tengah */
+            min-height: 500px; /* Tambahkan ketinggian minimal */
+            display: flex;
+            flex-direction: column; /* Letakkan konten di dalam kolom */
+        }
+
+        .card-item {
+            background-color: var(--color-item);
+            border: 2px solid var(--text-color-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: var(--text-color-light);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1;
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+        }
+
+        .card img {
+            width: 65px;
+            border-radius: 8px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.813rem;
+        }
+
+        .card-text {
+            font-size: 1rem;
+        }
+
+        .btn-outline-light {
+            color: var(--text-color-light);
+        }
+
+        .btn-outline-light:hover {
+            background-color: var(--newcolor);
+        }
+
+        .fa-trash-alt {
+            color: var(--first-color);
+        }
+        .order-history {
+            text-align: center;
+            background-color: var(--first-color);
+            border: 2px solid var(--text-color-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            color: var(--text-color-light);
+        }
+        /* Scroll styling */
+        .order-history-container {
+            max-height: 500px; /* Tentukan tinggi maksimum yang diinginkan *//* Tambahkan properti ini untuk membuatnya scrollable */
+            padding-left: 10px;
+            flex: 1; /* Tambahkan padding kiri sesuai kebutuhan Anda */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Scroll styling */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--text-color-light);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: var(--color-item);
+            border-radius: 10px; /* Add border-radius to make it rounded */
+        }
+        .btn-info {
+            background-color: var(--first-color);
+            color: var(--text-color-light);
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn-info:hover {
+            background-color: var(--newcolor);
+        }
+
+    </style>
+</head>
+
+<body class="bodycolor">
+<section class=" h-custom">
+    <div class="container py-5 h-100 shadow-sm rounded-8">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-7"> <!-- Apply col-lg-7 directly to the card div -->
+                <div class="card">
+                    <div class="card-body p-4">
+                        <!-- Fixed Order History -->
+                        <div class="order-history align-items-center" style="height: 80px;">
+                            <h3 class=" bold">Payment</h3>
+                        </div>
+                        <!-- Scrollable container for order history cards -->
+                        <div class="order-history-container mt-2" style="max-height: 350px; padding-right: 15px; margin-bottom: 15px;">
+                            <!-- Place all your order history cards here -->
+                            <div class="card-item mb-2 shadow-lg rounded-8">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <h4 class="card-title mb-4">GrigoPay</h4>
+                                            <div class="ms-3 ml-5">
+                                                <h5 class="card-subtitle small mb-0">Current Balance : Rp. 200.000</h5><br>
+                                                <h5 class="card-subtitle small mb-0">Payment method: GrigoPay</h5>
+                                            </div>
+                                        </div>
+                                        <!-- Mengganti tombol dengan gaya yang serupa -->
+                                        <div class="d-flex flex-row align-items-center mt-3">
+                                            <button class="btn btn-info  btn-lg mb-0">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>TOP UP</span> <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-item mb-2 shadow-lg rounded-8">
+                                <div class="card-body body-color">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0">Total Price</h6>
+                                    </div>
+                                    <form>
+                                        <hr class="my-1" style="background-color: white;">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="mb-1 mt-2">Total items </p>
+                                            <p class="mb-1">5</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="mb-1">Total price</p>
+                                            <p class="mb-1">Rp.481.800</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="mb-1">GrigoPay after Payment</p>
+                                            <p class="mb-1">Rp.281.800</p>
+                                        </div>
+                                        <button type="button" class="btn btn-info btn-block btn-lg">
+                                            <div class="d-flex justify-content-between">
+
+                                                <span>Rp.481.800</span>
+                                                <span>Pay <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-Uo2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
