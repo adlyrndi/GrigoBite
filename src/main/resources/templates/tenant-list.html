@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GRIGOBITE</title>
+</head>
+
+
+<style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+
+    :root {
+        --header-height: 3rem;
+        --first-color: #d17f47;
+        --nav-color: #423e57;
+        --first-color-darker: rgb(255, 140, 0);
+        --first-color-alt: rgb(44, 68, 100);
+        --test: #FF4500;
+        --first-color-alt-dark: rgb(63, 17, 31);
+        --title-color: #382f2f;
+        --text-color: #3a2d2d;
+        --text-color-light: #FFFFFF;
+        --newcolor: #24243e;
+        --container-color: rgb(253, 222, 224);
+        --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        --color-item: #2c4464;
+
+        /* Font & Typography */
+        --font: 'BioRhyme', serif;
+        --h1-size: 1.5rem;
+        --h2-size: 1.25rem;
+        --h2-size: 1rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+        --normal-font-size: .938rem;
+        --biggest-font-size: 2.25rem;
+
+        /* Font Weight */
+        --font-regular: 400;
+        --font-bold: 700;
+
+        /* Margin */
+        --margin-1: .5rem;
+        --margin-2: 1rem;
+        --margin-3: 1.5rem;
+        --margin-4: 2rem;
+        --margin-5: 2.5rem;
+        --margin-6: 3rem;
+
+        /* Z-index */
+        --z-tooltip: 10;
+        --z-fixed: 100;
+    }
+
+    body, html {
+        overflow: hidden; /* Disable scrolling for the entire page */
+    }
+
+    body {
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        font-family: var(--font);
+        font-size: var(--normal-font-size);
+        color: var(--text-color);
+        scrollbar-width: thin;
+        scrollbar-color: var(--first-color) var(--text-color-light);
+    }
+
+    @media (min-width: 1025px) {
+        .h-custom {
+            height: 100vh !important;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem; /* Adjust the gap between cards */
+        padding-block: 5rem;
+    }
+
+    .card__article {
+        width: 300px;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+
+    .card__data {
+        background-color: var(--color-item);
+        padding: 1.5rem 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .card__name {
+        font-size: 100%;
+        color: var(--text-color-light);
+        margin-bottom: .75rem;
+    }
+
+    .card__description {
+        font-weight: 500;
+        margin-bottom: 1.75rem;
+        color: var(--text-color-light);
+    }
+
+    .card__button {
+        display: inline-block;
+        background-color: var(--first-color);
+        padding: .75rem 1.5rem;
+        border-radius: .25rem;
+        color: var(--text-color-light);
+        font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+        .card__article {
+            width: 100%;
+        }
+    }
+
+    .cart-summary {
+        text-align: center;
+        background-color: var(--first-color);
+        border: 2px solid var(--text-color-light);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 20px;
+        color: var(--text-color-light);
+    }
+
+    h1 {
+        font-size: var(--biggest-font-size);
+    }
+
+    header {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--nav-color);
+        color: var(--text-color-light);
+    }
+
+    .box-title {
+        text-align: center;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin: 1rem auto 1rem; /* Center horizontally with auto margin */
+        width: 50%;
+        display: flex;
+        flex-direction: column; /* Change to column direction */
+        justify-content: center; /* Center children horizontally */
+        align-items: center;
+        margin-bottom: 0; /* Center children vertically */
+    }
+
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .card__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem; /* Adjust the gap between cards */
+        padding-block: 1rem; /* Adjust the padding */
+        margin-top: 0.5rem;
+        overflow-y: auto;
+    }
+    /* Scroll styling */
+    /* Scroll styling */
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--text-color-light);
+        border-radius: 10px;
+        margin-right: 5px; /* Tambahkan margin kanan pada scrollbar thumb */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: var(--color-item);
+        border-radius: 10px; /* Add border-radius to make it rounded */
+    }
+
+</style>
+
+
+<body>
+
+<div class="box-title">
+    <h2>Tenant List</h2>
+    <p>Canteen : Balgebun</p>
+</div>
+
+<section class="container">
+    <div class="card__container">
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">Nama Tenant</h2>
+                <p class="card__description">
+                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+
+
+        <!-- Repeat similar structure for other cards -->
+
+    </div>
+</section>
+
+</body>
+
+</html>
