@@ -29,6 +29,8 @@ public class AuthService {
 
 
     public ResponseRegister register(RequestRegister request) {
+
+        System.out.println(request);
         checkUserDoesNotExist(request.getUsername());
 
         User user = buildUserFromRegisterRequest(request);

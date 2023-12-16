@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeedbackService {
@@ -45,8 +46,11 @@ public class FeedbackService {
         return feedbackRepository.findById(feedbackId).orElse(null);
     }
 
+    public Optional<Pesanan> getPesananById(Long idPesanan){
+        return pesananRepository.findById(idPesanan);
+    }
     public Feedback getFeedbackByIdPesanan(Long pesananId){
-        return feedbackRepository.findByIdPesanan(pesananId).orElse(null);
+        return feedbackRepository.findByPesananId(pesananId).orElse(null);
     }
 
     public List<Feedback> getFeedbackByPenjual(Long idPenjual){

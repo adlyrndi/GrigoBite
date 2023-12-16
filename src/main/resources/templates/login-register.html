@@ -177,7 +177,7 @@
 
 
     <div class="login">
-        <form th:action="@{/auth/login}" method="POST">
+        <form id="loginForm" th:action="@{/auth/login}" method="POST">
             <label for="chk" aria-hidden="true">Login</label>
             <input th:name="username" type="text" placeholder="Email" required="">
             <input th:name="password" type="password" placeholder="Password" required="">
@@ -185,5 +185,8 @@
         </form>
     </div>
 </div>
+
+
+
 </body>
 </html>

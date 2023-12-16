@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     // You can add custom query methods if needed
 
+
     List<Feedback> findByIdPenjual(Long idPenjual);
     Optional<Feedback> findById(Long id);
 
-    Optional<Feedback> findByIdPesanan(Long idPesanan);
+    Optional<Feedback> findByPesananId(Long idPesanan);
 }
