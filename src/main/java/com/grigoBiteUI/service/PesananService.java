@@ -2,6 +2,7 @@ package com.grigoBiteUI.service;
 
 import com.grigoBiteUI.dto.canteen.RequestCUPesanan;
 import com.grigoBiteUI.dto.canteen.RequestUPesanan;
+import com.grigoBiteUI.dto.RequestFeedback;
 import com.grigoBiteUI.model.CanteenList.Menu;
 import com.grigoBiteUI.model.Pesanan;
 import com.grigoBiteUI.model.auth.Pembeli;
@@ -90,5 +91,17 @@ public class PesananService {
     public void deletePesanan(long idPesanan) {
         pesananRepository.deleteById(idPesanan);
     }
+
+    public boolean checkStatusFeedback(RequestFeedback requestFeedback){
+        Pesanan pesanan = pesananRepository.getReferenceById(requestFeedback.getIdPesanan());
+
+
+        if ((pesanan.getStatusTransaksi().equals("Sudah Dibayar")) && (pesanan.getStatusPesanan().equals("Complete"))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }
