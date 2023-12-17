@@ -9,4 +9,8 @@ public class HomeController {
     public String showHomePage() {
         return "home";
     }
+    @GetMapping("/homepage/login")
+    public String showHomePageAfterLogin() {
+        return "home-after-login";
+    }
 }

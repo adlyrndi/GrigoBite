@@ -576,59 +576,67 @@
     </div>
 </nav>
 
-
-<section class="container">
-    <div class="box-title">
-        <h2>Tenant List</h2>
-        <p th:text="${'Canteen : ' + canteen}"></p>
-    </div>
+<section id="list1" class="container">
     <div class="card__container">
-        <article th:each="tenant : ${tenants}" class="card__article">
+        <article class="card__article">
             <div class="card__data">
-                <h2 class="card__name" th:text="${'Nama Tenant: ' + tenant.namaTenant}"></h2>
-                <p class="card__description" th:text="${'Deskripsi Tenant: ' + tenant.deskripsiTenant}"></p>
-                <a th:href="@{'/menus/' + ${tenant.id}}" class="card__button">Check > </a>
+                <h2 class="card__name">ORDER HISTORY</h2>
+                <p class="card__description">
+                    Check your all order history
+                </p>
+                <a href="#" class="card__button">Check > </a>
             </div>
-
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">ORDER SOME FOOD!</h2>
+                <p class="card__description">
+                    You can place an order through our affiliated partners here.
+                </p>
+                <a th:href="@{/canteens}" class="card__button">order > </a>
+            </div>
+        </article>
+    </article>
+    </div>
+</section>
+<section id="list2" class="container">
+    <div class="card__container">
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">TRANSACTION HISTORY</h2>
+                <p class="card__description">
+                    Check your all transaction history
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">MENU</h2>
+                <p class="card__description">
+                    Edit your menu here
+                </p>
+                <a th:href="@{/canteens}" class="card__button">edit > </a>
+            </div>
+        </article>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">TENANT</h2>
+                <p class="card__description">
+                    Edit your tenant here
+                </p>
+                <a th:href="@{/canteens}" href="#" class="card__button">edit > </a>
+            </div>
+        </article>
         </article>
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Add Tenant</h2>
-            <form id="tenantForm" class="modal-form">
-                <div class="form-group">
-                    <label for="nama">Nama Tenant:</label>
-                    <input type="text" id="nama" th:name="namaTenant" required>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label for="fakultas">Deskripsi Tenant:</label>
-                    <input type="text" id="fakultas" th:name="deskripsiTenant" required>
-                </div>
-
-                <button type="submit" class="btn btn-info btn-block btn-lg " onclick="submitForm()">
-                    Add Tenant <i class="fas fa-long-arrow-alt-right ms-2"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-    <article id="myBtn" class="card__article custom-gap">
-        <div class="card__data">
-            <a  class="add-tenant__button">Add Tenant</a>
-        </div>
-    </article>
-    <div type="hidden" id="canteenIdContainer" th:text="${canteenId}"></div>
-
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-
-    var userData;
-
     $(document).ready(function () {
-        $('#myBtn').hide();
+        $('[id="list1"]').hide();
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -636,10 +644,8 @@
                 'Authorization': 'Bearer ' + getCookie('jwt')
             },
             success: function (data) {
-                userData = data;
-                if (data.role === 'PENJUAL' || data.role === 'ADMIN') {
-                    $('#myBtn').show();
-
+                if (data.role === 'PEMBELI') {
+                    $('[id="list1"]').show();
                 }
 
             },
@@ -649,23 +655,25 @@
         });
     });
 
-    var modal = document.getElementById("myModal");
-    var span = document.getElementsByClassName("close")[0];
-    var btn = document.getElementById("myBtn");
+    $(document).ready(function () {
+        $('[id="list2"]').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PENJUAL') {
+                    $('[id="list2"]').show();
+                }
 
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
 
     function getCookie(cookieName) {
         var name = cookieName + "=";
@@ -684,32 +692,6 @@
         return "";
     }
 
-    function closeModal() {
-        modal.style.display = "none";
-    }
-
-    function submitForm() {
-        var canteenId = document.getElementById('canteenIdContainer').textContent.trim();
-        $.ajax({
-            url: '/tenants/create/'+canteenId,
-            type: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + getCookie('jwt')
-            },igin
-            data: $('#tenantForm').serialize()+'&idPenjual=' + userData.id,
-            success: function (data) {
-                window.location.href = '/tenants/'+canteenId;
-                console.log('Tenant added successfully:', data);
-                closeModal();
-            },
-            error: function (error) {
-                console.error('Error adding tenant:', error);
-            }
-        });
-
-        event.preventDefault();
-
-    }
 </script>
 <script>
     function test() {

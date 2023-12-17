@@ -1,6 +1,7 @@
 package com.grigoBiteUI.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.grigoBiteUI.model.Transaction;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
 @Data
@@ -38,6 +38,7 @@ public class User implements UserDetails {
     private String role;
 
     private boolean active;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

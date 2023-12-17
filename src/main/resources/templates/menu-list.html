@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -60,11 +57,11 @@
             --z-tooltip: 10;
             --z-fixed: 100;
         }
-
-        .bodycolor {
-            background-color: var(--newcolor);
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 100vh !important;
+            }
         }
-
         body {
             background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
             font-family: var(--font);
@@ -73,7 +70,6 @@
             scrollbar-width: thin;
             scrollbar-color: var(--first-color) var(--text-color-light);
         }
-
 
         @media (min-width: 1025px) {
             .h-custom {
@@ -88,21 +84,18 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
             color: var(--text-color-light);
-            width: 120%; /* Sesuaikan lebar kartu sesuai keinginan Anda */
-            margin: 0 auto; /* Untuk membuatnya menjadi kartu tengah */
-
         }
-        .card-item {
+        .card-item{
             background-color: var(--color-item);
-            border: 2px solid var(--text-color-light);
+            border: 2px solid var(--text-color-light); /* Add border */
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
             color: var(--text-color-light);
-            margin-bottom: 20px;
         }
 
         .card-body {
             padding: 20px;
+
 
         }
 
@@ -119,22 +112,34 @@
             font-size: 0.813rem;
         }
 
-        .card-text {
-            font-size: 1rem;
-        }
 
-        .btn-outline-light {
+        .btn-info {
+            background-color: var(--first-color);
             color: var(--text-color-light);
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
         }
 
-        .btn-outline-light:hover {
-            background-color: var(--newcolor);
+        .btn-info:hover {
+            background-color: var(--first-color-darker);
+        }
+        ::-webkit-scrollbar {
+            width: 7px;
         }
 
-        .fa-trash-alt {
-            color: var(--first-color);
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--text-color-light);
+            border-radius: 10px;
+            margin-right: 5px; /* Tambahkan margin kanan pada scrollbar thumb */
         }
-        .order-history {
+
+        ::-webkit-scrollbar-track {
+            background-color: var(--color-item);
+            border-radius: 10px; /* Add border-radius to make it rounded */
+        }
+
+        .cart-summary {
             text-align: center;
             background-color: var(--first-color);
             border: 2px solid var(--text-color-light);
@@ -144,28 +149,92 @@
             margin-bottom: 20px;
             color: var(--text-color-light);
         }
-        /* Scroll styling */
-        .order-history-container {
-            max-height: 500px; /* Tentukan tinggi maksimum yang diinginkan */
-            overflow-y: auto; /* Tambahkan properti ini untuk membuatnya scrollable */
-            padding-left: 10px; /* Tambahkan padding kiri sesuai kebutuhan Anda */
+
+        /* Center and style the You have 4 items text */
+        .items-count {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-color-light);
+        }
+        .scrollable-container {
+            max-height: 500px; /* Set a fixed height for the container */
+            overflow-y: auto; /* Enable vertical scrolling */
+            background: var(--body-color); /* Set the same background color as html */
         }
 
-        /* Scroll styling */
-        ::-webkit-scrollbar {
-            width: 7px;
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--text-color-light);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
+        .modal-content {
             background-color: var(--color-item);
-            border-radius: 10px; /* Add border-radius to make it rounded */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 380px;
+            max-width: 80%; /* Set a maximum width if necessary */
+            text-align: center;
+            margin: auto; /* Center the modal horizontally */
+            position: relative;
+            margin-top:200px;
         }
 
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        h2 {
+            color: var(--text-color-light);
+            margin-bottom: 20px;
+        }
+
+        .modal-form {
+            max-width: 300px;
+            margin:  0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: var(--text-color-light);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button.card__button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--first-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.card__button:hover {
+            background-color: var(--first-color-darker);
+        }
         .navbar {
             margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
             position: fixed;
@@ -361,11 +430,9 @@
                 left: -25px;
             }
         }
-
     </style>
 </head>
-
-<body class="bodycolor">
+<body>
 <nav class="navbar navbar-expand-custom navbar-mainbg">
     <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
     <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -397,86 +464,265 @@
 <section class="h-100 h-custom">
     <div class="container py-5 h-100 shadow-sm rounded-8">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-7"> <!-- Apply col-lg-7 directly to the card div -->
-                <div class="card">
-                    <div class="card-body p-4">
-                        <!-- Fixed Order History -->
-                        <div class="order-history align-items-center" style="height: 100px; overflow: hidden;">
-                            <h4 class="mb-2 bold">Order History</h4>
-                            <p class="mb-0 small mt-2 card-subtitle"> User: Adly renadi </p>
-                        </div>
-                        <!-- Scrollable container for order history cards -->
-                        <div class="order-history-container overflow-auto mt-3" style="max-height: 350px; padding-right: 15px; margin-bottom: 15px;">
 
-                            <!-- Place all your order history cards here -->
-                            <div class="card-item mb-3 shadow-lg rounded-8">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="d-flex flex-row align-items-center">
-                                            <div class="ms-3">
-                                                <h5 class="card-title">Order #57473829</h5>
-                                                <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                                <p class="card-subtitle small mb-0">Name: adly renadi</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row align-items-center">
-                                            <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><div class="card-item mb-3 shadow-lg rounded-8">
+            <div class="col-lg-12">
+
+                <!-- Centered Cart Summary -->
+                <div class="cart-summary">
+                    <h4 class="mb-2 bold">BosMinumBos</h4>
+                </div>
+
+                <!-- Centered You have 4 items text -->
+                <div class="items-count">
+                    <hr class="my-4" style="background-color: white;">
+                    <h5 class="mb-2">List Menu : </h5>
+                </div>
+
+                <div class="scrollable-container overflow-auto">
+                    <!-- Place all your item cards here -->
+                    <!-- Sample card repeated multiple times for illustration -->
+                    <div class="scrollable-container overflow-auto">
+                        <!-- Use th:each to loop through the list of menus -->
+                        <div th:each="menu : ${menus}" class="card card-item mb-3 shadow-lg rounded-8">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center">
                                         <div class="ms-3">
-                                            <h5 class="card-title">Order #57473829</h5>
-                                            <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                            <p class="card-subtitle small mb-0">Name: adly renadi</p>
+                                            <!-- Access properties of the menu object -->
+                                            <h5 class="card-title" th:text="${menu.nama}"></h5>
+                                            <p class="card-subtitle small mb-0" th:text="${menu.deskripsi}"></p>
+                                            <div type="hidden" id="menuId" th:text="${menu.id}"></div>
+                                            <button class="btn btn-outline-light btn-sm me-2 mr-3 mt-3 ">X</button>
+
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="card-item mb-3 shadow-lg rounded-8">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="ms-3">
-                                            <h5 class="card-title">Order #57473829</h5>
-                                            <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                            <p class="card-subtitle small mb-0">Name: adly renadi</p>
+                                        <!-- Your existing HTML for buttons and price -->
+                                        <button id="#indecBtn" class="btn btn-outline-light btn-sm me-2 mr-3" onclick="decrementQuantity(this)">-</button>
+                                        <div id="#indecBtn1" class="d-flex align-items-center">
+                                            <h5 id="#indecBtn3" class="fw-normal mb-0 quantity">0</h5>
                                         </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
+                                        <button id="#indecBtn2"class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5" onclick="incrementQuantity(this)">+</button>
+                                        <div style="width: 150px;">
+                                            <h5 class="mb-0" th:text="'Rp.' + ${menu.harga}"></h5>
+                                        </div>
+                                        <a href="#!" style="color: var(--first-color);"><i class="fas fa-trash-alt"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            <!-- Repeat similar card structure for other order history items -->
-                            <!-- ... -->
-                        </div>
+
+<!--                        <button id="myBtn" class="btn btn-info btn-block btn-lg">Add Menu</button>-->
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <h2>Add Menu</h2>
+                                <form id="menuForm" class="modal-form">
+                                    <div class="form-group">
+                                        <label for="nama">Nama Menu:</label>
+                                        <input type="text" id="nama" th:name="nama" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="deskripsi">Deskripsi Menu:</label>
+                                        <input type="text" id="deskripsi" th:name="deskripsi" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="harga">Harga Menu:</label>
+                                        <input type="text" id="harga" th:name="harga" required>
+                                    </div>
+
+                                    <button type="submit" class="card__button" onclick="submitForm()">Add Menu</button>
+                                </form>
+                            </div>
+                    </div>
+
+                <div id="buttonCart" class="card card-item text-white rounded-8  mt-2">
+                    <div class="card-body body-color">
+                        <form>
+                            <!-- <hr class="my-4" style="background-color: white;"> -->
+                            <button type="button" class="btn btn-info btn-block btn-lg ">
+                                <div class="d-flex justify-content-center">
+                                    <span>Add To Cart <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                </div>
+                            </button>
+
+                        </form>
                     </div>
                 </div>
+                <div id="addMenu" class="card card-item text-white rounded-8  mt-2">
+                    <div class="card-body body-color">
+                        <form>
+                            <!-- <hr class="my-4" style="background-color: white;"> -->
+                            <button type="button" class="btn btn-info btn-block btn-lg ">
+                                <div class="d-flex justify-content-center">
+                                    <span>Add Menu <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                </div>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
+
         </div>
+    </div>
+    </div>
+        <div type="hidden" id="tenantIdContainer" th:text="${tenantId}"></div>
     </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#buttonCart').hide();
+        $('[id="#indecBtn"]').hide();
+        $('[id="#indecBtn1"]').hide();
+        $('[id="#indecBtn2"]').hide();
+        $('[id="#indecBtn3"]').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PEMBELI') {
+                    $('#buttonCart').show();
+                    $('[id="#indecBtn"]').show();
+                    $('[id="#indecBtn1"]').show();
+                    $('[id="#indecBtn2"]').show();
+                    $('[id="#indecBtn3"]').show();
+                }
 
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
 
-<!-- Bootstrap JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-Uo2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    $(document).ready(function () {
+        $('#addMenu').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PENJUAL') {
+                    $('#addMenu').show();
+                }
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    var btn = document.getElementById("addMenu");
+
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return "";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function submitForm() {
+        var tenantId = document.getElementById('tenantIdContainer').textContent.trim();
+        $.ajax({
+            url: '/menus/create/'+tenantId,
+            type: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            data: $('#menuForm').serialize(),
+            success: function (data) {
+                window.location.href = '/menus/'+tenantId;
+                console.log('Menu added successfully:', data);
+                closeModal();
+            },
+            error: function (error) {
+                console.error('Error adding menu:', error);
+            }
+        });
+
+        event.preventDefault();
+
+    }
+    //BELUM FIX
+    // function deleteMenu(menuId) {
+    //     var tenantId = document.getElementById('tenantIdContainer').textContent.trim();
+    //     $.ajax({
+    //         url: '/menus/delete/'+menuId,
+    //         type: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + getCookie('jwt')
+    //         },
+    //     });
+    //     window.location.href = '/menus/'+tenantId;
+    //     event.preventDefault();
+    //
+    // }
+    function incrementQuantity(button) {
+        var quantityElement = button.parentNode.querySelector('.quantity');
+        var quantity = parseInt(quantityElement.innerText);
+        quantity++;
+        quantityElement.innerText = quantity;
+    }
+
+    function decrementQuantity(button) {
+        var quantityElement = button.parentNode.querySelector('.quantity');
+        var quantity = parseInt(quantityElement.innerText);
+        if (quantity > 0) {
+            quantity--;
+            quantityElement.innerText = quantity;
+        }
+    }
+    //INI BELOM PIX YAH
+    // function addToCart() {
+    //     var cardItem = document.querySelector('.card-item'); // Adjust selector based on your actual structure
+    //     var foodName = cardItem.querySelector('.card-title').innerText;
+    //     var quantity = parseInt(cardItem.querySelector('.quantity').innerText);
+
+    //     // Now you have the food name and quantity, you can use them as needed
+    //     alert("Added to cart:\nFood Name: " + foodName + "\nQuantity: " + quantity);
+    // }
+</script>
 <script>
     function test() {
         var tabsNewAnim = $('#navbarSupportedContent');
