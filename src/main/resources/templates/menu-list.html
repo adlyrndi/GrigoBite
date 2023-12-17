@@ -2,12 +2,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRIGOBITE</title>
+    <title>Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
 
@@ -53,11 +57,11 @@
             --z-tooltip: 10;
             --z-fixed: 100;
         }
-
-        .bodycolor {
-            background-color: var(--newcolor);
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 100vh !important;
+            }
         }
-
         body {
             background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
             font-family: var(--font);
@@ -108,9 +112,6 @@
             font-size: 0.813rem;
         }
 
-        .card-text {
-            font-size: 1rem;
-        }
 
         .btn-info {
             background-color: var(--first-color);
@@ -121,7 +122,7 @@
         }
 
         .btn-info:hover {
-            background-color: var(--newcolor    );
+            background-color: var(--first-color-darker);
         }
         ::-webkit-scrollbar {
             width: 7px;
@@ -161,11 +162,304 @@
             background: var(--body-color); /* Set the same background color as html */
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
 
+        .modal-content {
+            background-color: var(--color-item);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 380px;
+            max-width: 80%; /* Set a maximum width if necessary */
+            text-align: center;
+            margin: auto; /* Center the modal horizontally */
+            position: relative;
+            margin-top:200px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        h2 {
+            color: var(--text-color-light);
+            margin-bottom: 20px;
+        }
+
+        .modal-form {
+            max-width: 300px;
+            margin:  0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: var(--text-color-light);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button.card__button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--first-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.card__button:hover {
+            background-color: var(--first-color-darker);
+        }
+        .navbar {
+            margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+            position: fixed;
+            top: 0; /* Navbar diposisikan di bagian atas halaman */
+            width: 100%;
+            z-index: 1000;
+            font-family: var(--font);
+        }
+        .nav-link {
+            margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+            position: fixed;
+            top: 0; /* Navbar diposisikan di bagian atas halaman */
+            width: 100%;
+            z-index: 1000;
+            font-weight: 1000;
+            color: var(--text-color-light);
+        }
+        .navbar-logo {
+            padding: 15px;
+            color: var(--first-color);
+            font-weight: 900;
+        }
+
+        .navbar-mainbg {
+            background-color: #1d204d;
+            padding: 0px;
+        }
+
+        #navbarSupportedContent {
+            overflow: hidden;
+            position: relative;
+        }
+
+        #navbarSupportedContent ul {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #navbarSupportedContent ul li a i {
+            margin-right: 10px;
+        }
+
+        #navbarSupportedContent li {
+            list-style-type: none;
+            float: left;
+        }
+
+        #navbarSupportedContent ul li a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+            padding: 20px 20px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        #navbarSupportedContent>ul>li.active>a {
+            color: var(--text-color-light);
+            background-color: transparent;
+            transition: all 0.7s;
+        }
+
+        #navbarSupportedContent a:not(:only-child):after {
+            content: "\f105";
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 14px;
+            font-family: "Font Awesome 5 Free";
+            display: inline-block;
+            padding-right: 3px;
+            vertical-align: middle;
+            font-weight: 900;
+            transition: 0.5s;
+        }
+
+        #navbarSupportedContent .active>a:not(:only-child):after {
+            transform: rotate(90deg);
+        }
+
+        .hori-selector {
+            display: inline-block;
+            position: absolute;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background-color: var(--first-color);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .hori-selector .right,
+        .hori-selector .left {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--first-color);
+            bottom: 10px;
+        }
+
+        .hori-selector .right {
+            right: -25px;
+        }
+
+        .hori-selector .left {
+            left: -25px;
+        }
+
+        .hori-selector .right:before,
+        .hori-selector .left:before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1d204d;
+        }
+
+        .hori-selector .right:before {
+            bottom: 0;
+            right: -25px;
+        }
+
+        .hori-selector .left:before {
+            bottom: 0;
+            left: -25px;
+        }
+
+        @media (min-width: 992px) {
+            .navbar-expand-custom {
+                -ms-flex-flow: row nowrap;
+                flex-flow: row nowrap;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+            }
+
+            .navbar-expand-custom .navbar-nav {
+                -ms-flex-direction: row;
+                flex-direction: row;
+            }
+
+            .navbar-expand-custom .navbar-toggler {
+                display: none;
+            }
+
+            .navbar-expand-custom .navbar-collapse {
+                display: -ms-flexbox!important;
+                display: flex!important;
+                -ms-flex-preferred-size: auto;
+                flex-basis: auto;
+            }
+        }
+
+        @media (max-width: 991px) {
+            #navbarSupportedContent ul li a {
+                padding: 12px 20px; /* Sesuaikan padding sesuai kebutuhan */
+            }
+
+            .hori-selector {
+                margin-top: 0px;
+                margin-left: 10px;
+                border-radius: 0;
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+            }
+
+            .hori-selector .left,
+            .hori-selector .right {
+                right: 10px;
+            }
+
+            .hori-selector .left {
+                top: -25px;
+                left: auto;
+            }
+
+            .hori-selector .right {
+                bottom: -25px;
+            }
+
+            .hori-selector .left:before {
+                left: -25px;
+                top: -25px;
+            }
+
+            .hori-selector .right:before {
+                bottom: -25px;
+                left: -25px;
+            }
+        }
     </style>
 </head>
-<body class="bodycolor">
-
+<body>
+<nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="fas fa-tachometer-alt"></i>Home</a>
+            </li>
+            <li class="nav-item active" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Order</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>History</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>LOGOUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <section class="h-100 h-custom">
     <div class="container py-5 h-100 shadow-sm rounded-8">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -200,12 +494,12 @@
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
                                         <!-- Your existing HTML for buttons and price -->
-                                        <button class="btn btn-outline-light btn-sm me-2 mr-3">-</button>
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="fw-normal mb-0">2</h5>
+                                        <button id="#indecBtn" class="btn btn-outline-light btn-sm me-2 mr-3" onclick="decrementQuantity(this)">-</button>
+                                        <div id="#indecBtn1" class="d-flex align-items-center">
+                                            <h5 id="#indecBtn3" class="fw-normal mb-0 quantity">0</h5>
                                         </div>
-                                        <button class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5">+</button>
-                                        <div style="width: 80px;">
+                                        <button id="#indecBtn2"class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5" onclick="incrementQuantity(this)">+</button>
+                                        <div style="width: 150px;">
                                             <h5 class="mb-0" th:text="'Rp.' + ${menu.harga}"></h5>
                                         </div>
                                         <a href="#!" style="color: var(--first-color);"><i class="fas fa-trash-alt"></i></a>
@@ -214,7 +508,7 @@
                             </div>
                         </div>
 
-                        <button id="myBtn" class="btn btn-info btn-block btn-lg">Add Menu</button>
+<!--                        <button id="myBtn" class="btn btn-info btn-block btn-lg">Add Menu</button>-->
                         <div id="myModal" class="modal">
                             <div class="modal-content">
                                 <span class="close" onclick="closeModal()">&times;</span>
@@ -235,18 +529,31 @@
                                         <input type="text" id="harga" th:name="harga" required>
                                     </div>
 
-                                    <button type="submit" class="card__button" onclick="submitForm()">Add Tenant</button>
+                                    <button type="submit" class="card__button" onclick="submitForm()">Add Menu</button>
                                 </form>
                             </div>
                     </div>
 
-                <div class="card card-item text-white rounded-8  mt-2">
+                <div id="buttonCart" class="card card-item text-white rounded-8  mt-2">
                     <div class="card-body body-color">
                         <form>
                             <!-- <hr class="my-4" style="background-color: white;"> -->
-                            <button id="buttonCart" type="button" class="btn btn-info btn-block btn-lg ">
+                            <button type="button" class="btn btn-info btn-block btn-lg ">
                                 <div class="d-flex justify-content-center">
                                     <span>Add To Cart <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                </div>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+                <div id="addMenu" class="card card-item text-white rounded-8  mt-2">
+                    <div class="card-body body-color">
+                        <form>
+                            <!-- <hr class="my-4" style="background-color: white;"> -->
+                            <button type="button" class="btn btn-info btn-block btn-lg ">
+                                <div class="d-flex justify-content-center">
+                                    <span>Add Menu <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                 </div>
                             </button>
 
@@ -267,6 +574,10 @@
 <script>
     $(document).ready(function () {
         $('#buttonCart').hide();
+        $('[id="#indecBtn"]').hide();
+        $('[id="#indecBtn1"]').hide();
+        $('[id="#indecBtn2"]').hide();
+        $('[id="#indecBtn3"]').hide();
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -276,6 +587,10 @@
             success: function (data) {
                 if (data.role === 'PEMBELI') {
                     $('#buttonCart').show();
+                    $('[id="#indecBtn"]').show();
+                    $('[id="#indecBtn1"]').show();
+                    $('[id="#indecBtn2"]').show();
+                    $('[id="#indecBtn3"]').show();
                 }
 
             },
@@ -286,7 +601,7 @@
     });
 
     $(document).ready(function () {
-        $('#myBtn').hide();
+        $('#addMenu').hide();
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -295,7 +610,7 @@
             },
             success: function (data) {
                 if (data.role === 'PENJUAL') {
-                    $('#myBtn').show();
+                    $('#addMenu').show();
                 }
 
             },
@@ -304,10 +619,9 @@
             }
         });
     });
-
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
-    var btn = document.getElementById("myBtn");
+    var btn = document.getElementById("addMenu");
 
     btn.onclick = function () {
         modal.style.display = "block";
@@ -366,7 +680,91 @@
         event.preventDefault();
 
     }
+    function incrementQuantity(button) {
+        var quantityElement = button.parentNode.querySelector('.quantity');
+        var quantity = parseInt(quantityElement.innerText);
+        quantity++;
+        quantityElement.innerText = quantity;
+    }
+
+    function decrementQuantity(button) {
+        var quantityElement = button.parentNode.querySelector('.quantity');
+        var quantity = parseInt(quantityElement.innerText);
+        if (quantity > 0) {
+            quantity--;
+            quantityElement.innerText = quantity;
+        }
+    }
+    //INI BELOM PIX YAH
+    // function addToCart() {
+    //     var cardItem = document.querySelector('.card-item'); // Adjust selector based on your actual structure
+    //     var foodName = cardItem.querySelector('.card-title').innerText;
+    //     var quantity = parseInt(cardItem.querySelector('.quantity').innerText);
+
+    //     // Now you have the food name and quantity, you can use them as needed
+    //     alert("Added to cart:\nFood Name: " + foodName + "\nQuantity: " + quantity);
+    // }
 </script>
+<script>
+    function test() {
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top": itemPosNewAnimTop.top + "px",
+            "left": itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("mouseenter", "li", function (e) {
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top": itemPosNewAnimTop.top + "px",
+                "left": itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    $(window).on('resize', function () {
+        setTimeout(function () {
+            test();
+        }, 500);
+    });
+
+    $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").slideToggle(300);
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    jQuery(document).ready(function ($) {
+        var path = window.location.pathname.split("/").pop();
+        if (path == '') {
+            path = 'index.html';
+        }
+        var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+        target.parent().addClass('active');
+    });
+</script>
+
 </body>
 
 </html>
