@@ -1,33 +1,45 @@
 package com.grigoBiteUI.controller;
 
 import com.grigoBiteUI.dto.canteen.RequestCUTenant;
+import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.model.CanteenList.Tenant;
+import com.grigoBiteUI.service.CanteenList.CanteenListService;
 import com.grigoBiteUI.service.CanteenList.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/tenants")
+@RequestMapping("/tenants")
 public class TenantController {
 
     private final TenantService tenantService;
 
+    private final CanteenListService canteenListService;
+
     @Autowired
-    public TenantController(TenantService tenantService) {
+    public TenantController(TenantService tenantService, CanteenListService canteenListService) {
         this.tenantService = tenantService;
+        this.canteenListService = canteenListService;
     }
 
     @GetMapping("/{canteenId}")
-    public ResponseEntity<List<Tenant>> getAllTenants(@PathVariable Long canteenId) {
+    public String getAllTenants(@PathVariable Long canteenId, Model model) {
         List<Tenant> tenants = tenantService.getAllTenants(canteenId);
-        return new ResponseEntity<>(tenants, HttpStatus.OK);
+        Optional<Canteen> canteen = canteenListService.getCanteenById(canteenId);
+        String canteenName = canteen.get().getNamaKantin();
+        model.addAttribute("tenants", tenants);
+        model.addAttribute("canteenId", canteenId);
+        model.addAttribute("canteen", canteenName);
+        return "tenant-list";
     }
 
     @GetMapping("/{canteenId}/{id}")
@@ -39,9 +51,12 @@ public class TenantController {
 
     @PostMapping("/create/{canteenId}")
     @PreAuthorize("hasAnyAuthority('tenant:crud', 'tenant:cru')")
-    public ResponseEntity<Tenant> createTenant(@PathVariable Long canteenId, @RequestBody RequestCUTenant requestCUTenant) {
+    public String createTenant(@PathVariable Long canteenId, RequestCUTenant requestCUTenant, RedirectAttributes redirectAttributes) {
         Tenant createdTenant = tenantService.createTenant(canteenId, requestCUTenant);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        redirectAttributes.addAttribute("canteenId", canteenId);
+
+        return "redirect:/tenants/{canteenId}";
     }
 
     @PutMapping("/update/{canteenId}/{id}")

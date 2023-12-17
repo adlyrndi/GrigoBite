@@ -216,6 +216,51 @@
         border-radius: 10px; /* Add border-radius to make it rounded */
     }
 
+    #myModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>
 
 
@@ -223,90 +268,132 @@
 
 <div class="box-title">
     <h2>Tenant List</h2>
-    <p>Canteen : Balgebun</p>
+    <p th:text="${'Canteen : ' + canteen}"></p>
 </div>
 
 <section class="container">
     <div class="card__container">
-        <article class="card__article">
+        <article th:each="tenant : ${tenants}" class="card__article">
             <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
+                <h2 class="card__name" th:text="${'Nama Tenant: ' + tenant.namaTenant}"></h2>
+                <p class="card__description" th:text="${'Deskripsi Tenant: ' + tenant.deskripsiTenant}"></p>
+                <a th:href="@{'/menus/' + ${tenant.id}}" class="card__button">Check > </a>
             </div>
-        </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
 
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
         </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
-        <article class="card__article">
-            <div class="card__data">
-                <h2 class="card__name">Nama Tenant</h2>
-                <p class="card__description">
-                    Bos ini deskripsi ya bos HEHEH bisa diisi juga buat format kaya apa aja boleeeh
-                </p>
-                <a href="#" class="card__button">Check > </a>
-            </div>
-        </article>
-
-
-        <!-- Repeat similar structure for other cards -->
-
     </div>
+
+    <button id="myBtn" class="card__button">Add Tenant</button>
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Add Tenant</h2>
+            <form id="tenantForm" class="modal-form">
+                <div class="form-group">
+                    <label for="nama">Nama Tenant:</label>
+                    <input type="text" id="nama" th:name="namaTenant" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fakultas">Deskripsi Tenant:</label>
+                    <input type="text" id="fakultas" th:name="deskripsiTenant" required>
+                </div>
+
+                <button type="submit" class="card__button" onclick="submitForm()">Add Tenant</button>
+            </form>
+        </div>
+    </div>
+
+    <div type="hidden" id="canteenIdContainer" th:text="${canteenId}"></div>
+
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myBtn').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PENJUAL' || data.role === 'ADMIN') {
+                    $('#myBtn').show();
+                }
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
+
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    var btn = document.getElementById("myBtn");
+
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return "";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function submitForm() {
+        var canteenId = document.getElementById('canteenIdContainer').textContent.trim();
+        $.ajax({
+            url: '/tenants/create/'+canteenId,
+            type: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            data: $('#tenantForm').serialize(),
+            success: function (data) {
+                window.location.href = '/tenants/'+canteenId;
+                console.log('Tenant added successfully:', data);
+                closeModal();
+            },
+            error: function (error) {
+                console.error('Error adding tenant:', error);
+            }
+        });
+
+        event.preventDefault();
+
+    }
+</script>
 
 </body>
 

@@ -181,10 +181,23 @@
             <label for="chk" aria-hidden="true">Login</label>
             <input th:name="username" type="text" placeholder="Email" required="">
             <input th:name="password" type="password" placeholder="Password" required="">
+            <input type="hidden" id="loginError" th:value="${loginError}" />
             <button style="background-color: #24243e;">Login</button>
         </form>
     </div>
+
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+            var loginError = document.getElementById("loginError").value;
+
+            if (loginError === "true") {
+                alert("Invalid credentials. Please try again.");
+                window.location.href = "/auth/register-login";
+            }
+    });
+</script>
 
 
 

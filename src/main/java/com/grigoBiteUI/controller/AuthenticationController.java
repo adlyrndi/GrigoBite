@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,11 @@ public class AuthenticationController {
         return "login-register";
     }
 
+    @GetMapping(path = "/login")
+    public String loginPage(Model model) {
+        return "login-register";
+    }
+
     @Autowired
     private AuthService authenticationService;
 
@@ -38,22 +46,30 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String login(Model model, RequestLogin request, HttpServletResponse response) {
-        ResponseLogin responseLogin = authenticationService.login(request);
+        try {
+            ResponseLogin responseLogin = authenticationService.login(request);
 
-        System.out.println("kena dsiini");
+            String token = responseLogin.getToken();
+            Cookie jwtCookie = new Cookie("jwt", token);
+            jwtCookie.setPath("/");
+            response.addCookie(jwtCookie);
 
-        String token = responseLogin.getToken();
-        Cookie jwtCookie = new Cookie("jwt", token);
-        jwtCookie.setPath("/");
-        response.addCookie(jwtCookie);
-
-        return "redirect:/homepage";
+            return "redirect:/homepage";
+        } catch(RuntimeException e)
+        {
+            model.addAttribute("loginError", true);
+            return "login-register";
+        }
     }
 
+
     @GetMapping("/user")
-    public String user(Model model, HttpServletRequest request) {
-        ResponseUser responseUser = authenticationService.getUser(request);
-        model.addAttribute("user", responseUser);
-        return "user";
+    public ResponseEntity<ResponseUser> user(HttpServletRequest request) {
+        try {
+            ResponseUser responseUser = authenticationService.getUser(request);
+            return ResponseEntity.ok(responseUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

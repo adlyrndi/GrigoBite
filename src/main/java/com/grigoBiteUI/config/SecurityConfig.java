@@ -52,13 +52,15 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/profile/**", "/docs/**", "/actuator/**", "/homepage")
+                .requestMatchers("/auth/**", "/**", "/profile/**", "/docs/**", "/actuator/**", "/homepage", "/user", "/tenants/{canteensId}", "/canteens" )
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
+                .loginPage("/auth/register-login");
 
         return http.build();
     }

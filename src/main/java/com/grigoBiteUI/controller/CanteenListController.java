@@ -12,16 +12,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/canteens")
+@RequestMapping("/canteens")
 public class CanteenListController {
 
     private final CanteenListService canteenListService;
+
+    @GetMapping("")
+    public String showCanteensPage(Model model) {
+        List<Canteen> canteens = canteenListService.getAllCanteens();
+        model.addAttribute("canteens", canteens);
+        return "canteen-list";
+    }
 
     @Autowired
     public CanteenListController(CanteenListService canteenListService) {
@@ -43,17 +51,16 @@ public class CanteenListController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('canteen:crud')")
-    public ResponseEntity<Canteen> createCanteen(@RequestBody RequestCUCanteen requestCUCanteen) {
+    public ResponseEntity<Canteen> createCanteen(RequestCUCanteen requestCUCanteen) {
         Canteen createdCanteen = canteenListService.createCanteen(requestCUCanteen);
-        return new ResponseEntity<>(createdCanteen, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('canteen:crud')")
-    public ResponseEntity<Canteen> updateCanteen(@PathVariable Long id, @RequestBody RequestCUCanteen requestCUCanteen) {
-        System.out.println("tes");
+    public String updateCanteen(@PathVariable Long id, @RequestBody RequestCUCanteen requestCUCanteen) {
         Canteen updatedCanteen = canteenListService.updateCanteen(id, requestCUCanteen);
-        return ResponseEntity.ok(updatedCanteen);
+        return "redirect:/canteens";
     }
 
     @DeleteMapping("/delete/{id}")

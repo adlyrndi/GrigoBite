@@ -1,5 +1,6 @@
 package com.grigoBiteUI.model.CanteenList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grigoBiteUI.model.auth.Penjual;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class Tenant {
     private String namaTenant;
     private String deskripsiTenant;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> listMenu;
 

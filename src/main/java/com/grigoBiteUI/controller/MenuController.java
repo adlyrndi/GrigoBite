@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/menus")
+@RequestMapping("/menus")
 public class MenuController {
 
     private final MenuService menuService;
@@ -25,10 +26,12 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @GetMapping("/tenant/{tenantId}")
-    public ResponseEntity<List<Menu>> getAllMenusByTenantId(@PathVariable Long tenantId) {
+    @GetMapping("/{tenantId}")
+    public String getAllMenusByTenantId(@PathVariable Long tenantId, Model model) {
         List<Menu> menus = menuService.getAllMenusByTenantId(tenantId);
-        return new ResponseEntity<>(menus, HttpStatus.OK);
+        model.addAttribute("menus", menus);
+        model.addAttribute("tenantId", tenantId);
+        return "menu-list";
     }
 
     @GetMapping("/{tenantId}/{id}")
@@ -51,10 +54,10 @@ public class MenuController {
         return new ResponseEntity<>(menus, HttpStatus.OK);
     }
 
-    @PostMapping("/{tenantId}")
+    @PostMapping("/create/{tenantId}")
     @PreAuthorize("hasAnyAuthority('menu:crud')")
     public ResponseEntity<Menu> createMenu(@PathVariable Long tenantId,
-                                           @RequestBody @Valid RequestCUMenu requestCUMenu) {
+                                           RequestCUMenu requestCUMenu) {
         Menu createdMenu = menuService.createMenu(requestCUMenu, tenantId);
         return new ResponseEntity<>(createdMenu, HttpStatus.CREATED);
     }

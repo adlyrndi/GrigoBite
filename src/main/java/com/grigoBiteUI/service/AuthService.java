@@ -11,7 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,15 +47,21 @@ public class AuthService {
     }
 
     public ResponseLogin login(RequestLogin request) {
-        authenticateUser(request.getUsername(), request.getPassword());
+        try {
+            authenticateUser(request.getUsername(), request.getPassword());
 
-        User user = getUserByUsername(request.getUsername());
-        String jwtToken = jwtService.generateToken(user);
+            User user = getUserByUsername(request.getUsername());
+            String jwtToken = jwtService.generateToken(user);
 
-        return ResponseLogin.builder()
-                .token(jwtToken)
-                .user(new ResponseUser(user))
-                .build();
+            return ResponseLogin.builder()
+                    .token(jwtToken)
+                    .user(new ResponseUser(user))
+                    .build();
+        } catch (BadCredentialsException e) {
+            // Handle bad credentials exception
+            throw new RuntimeException("Invalid username or password", e);
+        }
+
     }
 
     public ResponseUser getUser(HttpServletRequest request) {
