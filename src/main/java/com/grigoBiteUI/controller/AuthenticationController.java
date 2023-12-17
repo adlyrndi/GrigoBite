@@ -54,7 +54,7 @@ public class AuthenticationController {
             jwtCookie.setPath("/");
             response.addCookie(jwtCookie);
 
-            return "redirect:/homepage";
+            return "redirect:/homepage/login";
         } catch(RuntimeException e)
         {
             model.addAttribute("loginError", true);
@@ -67,6 +67,7 @@ public class AuthenticationController {
     public ResponseEntity<ResponseUser> user(HttpServletRequest request) {
         try {
             ResponseUser responseUser = authenticationService.getUser(request);
+            System.out.println(responseUser);
             return ResponseEntity.ok(responseUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

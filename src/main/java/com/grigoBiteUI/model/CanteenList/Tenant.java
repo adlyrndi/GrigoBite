@@ -32,4 +32,8 @@ public class Tenant {
     @ManyToOne
     private Canteen canteen;
 
+
+    public Long getTenantId() {
+        return id;
+    }
 }

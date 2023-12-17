@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class RequestCUTenant {
     private String namaTenant;
     private String deskripsiTenant;
+
+    private Integer idPenjual;
 }

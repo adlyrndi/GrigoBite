@@ -1,5 +1,6 @@
 package com.grigoBiteUI.model.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grigoBiteUI.model.CanteenList.Tenant;
 import com.grigoBiteUI.model.Pesanan;
 import jakarta.persistence.CascadeType;
@@ -25,11 +26,16 @@ public class Penjual extends User {
 
     private double saldo;
 
+    @JsonIgnore
     @OneToOne
     private Tenant tenant;
 
     @OneToMany(mappedBy = "penjual", cascade = CascadeType.ALL)
     private List<Pesanan> listPesanan;
+
+    public Long getIdTenant() {
+        return tenant.getTenantId();
+    }
 
 
 }

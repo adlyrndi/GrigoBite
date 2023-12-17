@@ -78,14 +78,16 @@ public class TenantService {
     }
 
     private Tenant mapRequestToTenant(RequestCUTenant requestCUTenant) {
-        int idPenjual = getLoggedUser().getId();
+        int idPenjual = requestCUTenant.getIdPenjual();
         Optional<User> userOptional = Optional.ofNullable(userRepository.findById(idPenjual));
         Penjual penjual = (Penjual) userOptional.get();
-        return Tenant.builder()
+        Tenant tenant = Tenant.builder()
                 .namaTenant(requestCUTenant.getNamaTenant())
                 .deskripsiTenant(requestCUTenant.getDeskripsiTenant())
                 .penjual(penjual)
                 .build();
+        penjual.setTenant(tenant);
+        return tenant;
     }
 
     private void mapRequestToExistingTenant(RequestCUTenant requestCUTenant, Tenant existingTenant) {

@@ -53,6 +53,4 @@ public class PesananController {
         return new ResponseEntity<>(pesanans, HttpStatus.OK);
     }
 
-    // Add more endpoints as needed
-
 }

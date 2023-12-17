@@ -3,9 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>GRIGOBITE</title>
+    <title>Tenant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
 </head>
 
 
@@ -105,6 +114,7 @@
         border-radius: 1.25rem;
         overflow: hidden;
         margin-bottom: 1rem;
+        position: relative;
     }
 
     .card__data {
@@ -114,6 +124,10 @@
         text-align: center;
         position: relative;
         z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* Add this line */
     }
 
     .card__name {
@@ -126,6 +140,12 @@
         font-weight: 500;
         margin-bottom: 1.75rem;
         color: var(--text-color-light);
+        max-height: 80px; /* Set the maximum height for the description */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Adjust the number of lines to be displayed */
+        -webkit-box-orient: vertical;
     }
 
     .card__button {
@@ -135,23 +155,13 @@
         border-radius: .25rem;
         color: var(--text-color-light);
         font-weight: 600;
+        margin-top: auto;
     }
 
     @media screen and (max-width: 768px) {
         .card__article {
             width: 100%;
         }
-    }
-
-    .cart-summary {
-        text-align: center;
-        background-color: var(--first-color);
-        border: 2px solid var(--text-color-light);
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        margin-bottom: 20px;
-        color: var(--text-color-light);
     }
 
     h1 {
@@ -177,7 +187,9 @@
         flex-direction: column; /* Change to column direction */
         justify-content: center; /* Center children horizontally */
         align-items: center;
-        margin-bottom: 0; /* Center children vertically */
+        margin-bottom: 0;
+        border: 2px solid var(--text-color-light);
+        margin-bottom: 30px/* Center children vertically */
     }
 
 
@@ -224,54 +236,352 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
+        z-index: 100;
     }
 
     .modal-content {
-        background-color: #fefefe;
+        background-color: var(--color-item);
         padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: 380px;
         max-width: 600px;
+        text-align: center;
+        margin: auto;
+        position: relative;
+        margin-top: 200px;
     }
 
     .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
         cursor: pointer;
     }
 
+    h2 {
+        color: var(--text-color-light);
+        margin-bottom: 20px;
+    }
+
     .modal-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .form-group {
-        display: flex;
-        flex-direction: column;
+        margin-bottom: 15px;
     }
 
+    label {
+        color: var(--text-color-light);
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button.card__button {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--first-color);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button.card__button:hover {
+        background-color: var(--first-color-darker);
+    }
+    .add-tenant__button {
+        display: block;
+        width: 100%; /* Make the button full width */
+        padding: 1rem; /* Adjust the padding to control height */
+        border: none; /* Remove border */
+        border-radius: .52rem;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        /* Add transition for a smoother effect */
+
+        /* Add hover effect */
+    }
+
+    .add-tenant__button:hover {
+        background-color: var(--first-color-darker);
+    }
+    .card__button:hover{
+        background-color: var(--first-color-darker);
+    }
+
+    .btn-info {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-info:hover {
+        background-color: var(--first-color-darker);
+    }
+    .modal-form {
+        max-width: 400px; /* Adjust the width of the form */
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Adjust the margin as needed */
+    }
+
+    .navbar {
+        margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+        position: fixed;
+        top: 0; /* Navbar diposisikan di bagian atas halaman */
+        width: 100%;
+        z-index: 1000;
+        font-family: var(--font);
+    }
+    .nav-link {
+        margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+        position: fixed;
+        top: 0; /* Navbar diposisikan di bagian atas halaman */
+        width: 100%;
+        z-index: 1000;
+        font-weight: 1000;
+        color: var(--text-color-light);
+    }
+    .navbar-logo {
+        padding: 15px;
+        color: var(--first-color);
+        font-weight: 900;
+    }
+
+    .navbar-mainbg {
+        background-color: #1d204d;
+        padding: 0px;
+    }
+
+    #navbarSupportedContent {
+        overflow: hidden;
+        position: relative;
+    }
+
+    #navbarSupportedContent ul {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #navbarSupportedContent ul li a i {
+        margin-right: 10px;
+    }
+
+    #navbarSupportedContent li {
+        list-style-type: none;
+        float: left;
+    }
+
+    #navbarSupportedContent ul li a {
+        color: var(--text-color-light);
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+        padding: 20px 20px;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+    }
+
+    #navbarSupportedContent>ul>li.active>a {
+        color: var(--text-color-light);
+        background-color: transparent;
+        transition: all 0.7s;
+    }
+
+    #navbarSupportedContent a:not(:only-child):after {
+        content: "\f105";
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 14px;
+        font-family: "Font Awesome 5 Free";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        transition: 0.5s;
+    }
+
+    #navbarSupportedContent .active>a:not(:only-child):after {
+        transform: rotate(90deg);
+    }
+
+    .hori-selector {
+        display: inline-block;
+        position: absolute;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        background-color: var(--first-color);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        margin-top: 10px;
+    }
+
+    .hori-selector .right,
+    .hori-selector .left {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background-color: var(--first-color);
+        bottom: 10px;
+    }
+
+    .hori-selector .right {
+        right: -25px;
+    }
+
+    .hori-selector .left {
+        left: -25px;
+    }
+
+    .hori-selector .right:before,
+    .hori-selector .left:before {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1d204d;
+    }
+
+    .hori-selector .right:before {
+        bottom: 0;
+        right: -25px;
+    }
+
+    .hori-selector .left:before {
+        bottom: 0;
+        left: -25px;
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-custom {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-custom .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-custom .navbar-toggler {
+            display: none;
+        }
+
+        .navbar-expand-custom .navbar-collapse {
+            display: -ms-flexbox!important;
+            display: flex!important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent ul li a {
+            padding: 12px 20px; /* Sesuaikan padding sesuai kebutuhan */
+        }
+
+        .hori-selector {
+            margin-top: 0px;
+            margin-left: 10px;
+            border-radius: 0;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+
+        .hori-selector .left,
+        .hori-selector .right {
+            right: 10px;
+        }
+
+        .hori-selector .left {
+            top: -25px;
+            left: auto;
+        }
+
+        .hori-selector .right {
+            bottom: -25px;
+        }
+
+        .hori-selector .left:before {
+            left: -25px;
+            top: -25px;
+        }
+
+        .hori-selector .right:before {
+            bottom: -25px;
+            left: -25px;
+        }
+    }
 </style>
-
-
 <body>
+<nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/hompage/login}"><i class="fas fa-tachometer-alt"></i>Home</a>
+            </li>
+            <li class="nav-item active" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/canteens}"><i class="far fa-address-book"></i>Order</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>History</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>LOGOUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-<div class="box-title">
-    <h2>Tenant List</h2>
-    <p th:text="${'Canteen : ' + canteen}"></p>
-</div>
 
 <section class="container">
+    <div class="box-title">
+        <h2>Tenant List</h2>
+        <p th:text="${'Canteen : ' + canteen}"></p>
+    </div>
     <div class="card__container">
         <article th:each="tenant : ${tenants}" class="card__article">
             <div class="card__data">
@@ -282,10 +592,6 @@
 
         </article>
     </div>
-
-    <button id="myBtn" class="card__button">Add Tenant</button>
-
-
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -296,22 +602,31 @@
                     <input type="text" id="nama" th:name="namaTenant" required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-4">
                     <label for="fakultas">Deskripsi Tenant:</label>
                     <input type="text" id="fakultas" th:name="deskripsiTenant" required>
                 </div>
 
-                <button type="submit" class="card__button" onclick="submitForm()">Add Tenant</button>
+                <button type="submit" class="btn btn-info btn-block btn-lg " onclick="submitForm()">
+                    Add Tenant <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                </button>
             </form>
         </div>
     </div>
-
+    <article id="myBtn" class="card__article custom-gap">
+        <div class="card__data">
+            <a  class="add-tenant__button">Add Tenant</a>
+        </div>
+    </article>
     <div type="hidden" id="canteenIdContainer" th:text="${canteenId}"></div>
 
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+
+    var userData;
+
     $(document).ready(function () {
         $('#myBtn').hide();
         $.ajax({
@@ -321,6 +636,7 @@
                 'Authorization': 'Bearer ' + getCookie('jwt')
             },
             success: function (data) {
+                userData = data;
                 if (data.role === 'PENJUAL' || data.role === 'ADMIN') {
                     $('#myBtn').show();
                 }
@@ -378,8 +694,8 @@
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + getCookie('jwt')
-            },
-            data: $('#tenantForm').serialize(),
+            },igin
+            data: $('#tenantForm').serialize()+'&idPenjual=' + userData.id,
             success: function (data) {
                 window.location.href = '/tenants/'+canteenId;
                 console.log('Tenant added successfully:', data);
@@ -394,6 +710,66 @@
 
     }
 </script>
+<script>
+    function test() {
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top": itemPosNewAnimTop.top + "px",
+            "left": itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("mouseenter", "li", function (e) {
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top": itemPosNewAnimTop.top + "px",
+                "left": itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    $(window).on('resize', function () {
+        setTimeout(function () {
+            test();
+        }, 500);
+    });
+
+    $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").slideToggle(300);
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    jQuery(document).ready(function ($) {
+        var path = window.location.pathname.split("/").pop();
+        if (path == '') {
+            path = 'index.html';
+        }
+        var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+        target.parent().addClass('active');
+    });
+</script>
+
 
 </body>
 
