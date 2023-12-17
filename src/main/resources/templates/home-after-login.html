@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+</head>
+
+
+<style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+
+    :root {
+        --header-height: 3rem;
+        --first-color: #d17f47;
+        --nav-color: #423e57;
+        --first-color-darker: rgb(255, 140, 0);
+        --first-color-alt: rgb(44, 68, 100);
+        --test: #FF4500;
+        --first-color-alt-dark: rgb(63, 17, 31);
+        --title-color: #382f2f;
+        --text-color: #3a2d2d;
+        --text-color-light: #FFFFFF;
+        --newcolor: #24243e;
+        --container-color: rgb(253, 222, 224);
+        --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        --color-item: #2c4464;
+
+        /* Font & Typography */
+        --font: 'BioRhyme', serif;
+        --h1-size: 1.5rem;
+        --h2-size: 1.25rem;
+        --h2-size: 1rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+        --normal-font-size: .938rem;
+        --biggest-font-size: 2.25rem;
+
+        /* Font Weight */
+        --font-regular: 400;
+        --font-bold: 700;
+
+        /* Margin */
+        --margin-1: .5rem;
+        --margin-2: 1rem;
+        --margin-3: 1.5rem;
+        --margin-4: 2rem;
+        --margin-5: 2.5rem;
+        --margin-6: 3rem;
+
+        /* Z-index */
+        --z-tooltip: 10;
+        --z-fixed: 100;
+    }
+
+    body, html {
+        overflow: hidden; /* Disable scrolling for the entire page */
+    }
+
+    body {
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        font-family: var(--font);
+        font-size: var(--normal-font-size);
+        color: var(--text-color);
+        scrollbar-width: thin;
+        scrollbar-color: var(--first-color) var(--text-color-light);
+    }
+
+    @media (min-width: 1025px) {
+        .h-custom {
+            height: 100vh !important;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem; /* Adjust the gap between cards */
+        padding-block: 5rem;
+    }
+
+    .card__article {
+        width: 300px;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .card__data {
+        background-color: var(--color-item);
+        padding: 1.5rem 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* Add this line */
+    }
+
+    .card__name {
+        font-size: 100%;
+        color: var(--text-color-light);
+        margin-bottom: .75rem;
+    }
+
+    .card__description {
+        font-weight: 500;
+        margin-bottom: 1.75rem;
+        color: var(--text-color-light);
+        max-height: 80px; /* Set the maximum height for the description */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Adjust the number of lines to be displayed */
+        -webkit-box-orient: vertical;
+    }
+
+    .card__button {
+        display: inline-block;
+        background-color: var(--first-color);
+        padding: .75rem 1.5rem;
+        border-radius: .25rem;
+        color: var(--text-color-light);
+        font-weight: 600;
+        margin-top: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        .card__article {
+            width: 100%;
+        }
+    }
+
+    h1 {
+        font-size: var(--biggest-font-size);
+    }
+
+    header {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--nav-color);
+        color: var(--text-color-light);
+    }
+
+    .box-title {
+        text-align: center;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin: 1rem auto 1rem; /* Center horizontally with auto margin */
+        width: 50%;
+        display: flex;
+        flex-direction: column; /* Change to column direction */
+        justify-content: center; /* Center children horizontally */
+        align-items: center;
+        margin-bottom: 0;
+        border: 2px solid var(--text-color-light);
+        margin-bottom: 30px/* Center children vertically */
+    }
+
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .card__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem; /* Adjust the gap between cards */
+        padding-block: 1rem; /* Adjust the padding */
+        margin-top: 0.5rem;
+        overflow-y: auto;
+    }
+    /* Scroll styling */
+    /* Scroll styling */
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--text-color-light);
+        border-radius: 10px;
+        margin-right: 5px; /* Tambahkan margin kanan pada scrollbar thumb */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: var(--color-item);
+        border-radius: 10px; /* Add border-radius to make it rounded */
+    }
+
+    #myModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .modal-content {
+        background-color: var(--color-item);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 400px;
+        height: 380px;
+        max-width: 600px;
+        text-align: center;
+        margin: auto;
+        position: relative;
+        margin-top: 200px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    h2 {
+        color: var(--text-color-light);
+        margin-bottom: 20px;
+    }
+
+    .modal-form {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        color: var(--text-color-light);
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button.card__button {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--first-color);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button.card__button:hover {
+        background-color: var(--first-color-darker);
+    }
+    .add-tenant__button {
+        display: block;
+        width: 100%; /* Make the button full width */
+        padding: 1rem; /* Adjust the padding to control height */
+        border: none; /* Remove border */
+        border-radius: .52rem;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        /* Add transition for a smoother effect */
+
+        /* Add hover effect */
+    }
+
+    .add-tenant__button:hover {
+        background-color: var(--first-color-darker);
+    }
+    .card__button:hover{
+        background-color: var(--first-color-darker);
+    }
+
+    .btn-info {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--first-color);
+        color: var(--text-color-light);
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-info:hover {
+        background-color: var(--first-color-darker);
+    }
+    .modal-form {
+        max-width: 400px; /* Adjust the width of the form */
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Adjust the margin as needed */
+    }
+
+    .navbar {
+        margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+        position: fixed;
+        top: 0; /* Navbar diposisikan di bagian atas halaman */
+        width: 100%;
+        z-index: 1000;
+        font-family: var(--font);
+    }
+    .nav-link {
+        margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+        position: fixed;
+        top: 0; /* Navbar diposisikan di bagian atas halaman */
+        width: 100%;
+        z-index: 1000;
+        font-weight: 1000;
+        color: var(--text-color-light);
+    }
+    .navbar-logo {
+        padding: 15px;
+        color: var(--first-color);
+        font-weight: 900;
+    }
+
+    .navbar-mainbg {
+        background-color: #1d204d;
+        padding: 0px;
+    }
+
+    #navbarSupportedContent {
+        overflow: hidden;
+        position: relative;
+    }
+
+    #navbarSupportedContent ul {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #navbarSupportedContent ul li a i {
+        margin-right: 10px;
+    }
+
+    #navbarSupportedContent li {
+        list-style-type: none;
+        float: left;
+    }
+
+    #navbarSupportedContent ul li a {
+        color: var(--text-color-light);
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+        padding: 20px 20px;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+    }
+
+    #navbarSupportedContent>ul>li.active>a {
+        color: var(--text-color-light);
+        background-color: transparent;
+        transition: all 0.7s;
+    }
+
+    #navbarSupportedContent a:not(:only-child):after {
+        content: "\f105";
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 14px;
+        font-family: "Font Awesome 5 Free";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        transition: 0.5s;
+    }
+
+    #navbarSupportedContent .active>a:not(:only-child):after {
+        transform: rotate(90deg);
+    }
+
+    .hori-selector {
+        display: inline-block;
+        position: absolute;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        background-color: var(--first-color);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        margin-top: 10px;
+    }
+
+    .hori-selector .right,
+    .hori-selector .left {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background-color: var(--first-color);
+        bottom: 10px;
+    }
+
+    .hori-selector .right {
+        right: -25px;
+    }
+
+    .hori-selector .left {
+        left: -25px;
+    }
+
+    .hori-selector .right:before,
+    .hori-selector .left:before {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1d204d;
+    }
+
+    .hori-selector .right:before {
+        bottom: 0;
+        right: -25px;
+    }
+
+    .hori-selector .left:before {
+        bottom: 0;
+        left: -25px;
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-custom {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-custom .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-custom .navbar-toggler {
+            display: none;
+        }
+
+        .navbar-expand-custom .navbar-collapse {
+            display: -ms-flexbox!important;
+            display: flex!important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent ul li a {
+            padding: 12px 20px; /* Sesuaikan padding sesuai kebutuhan */
+        }
+
+        .hori-selector {
+            margin-top: 0px;
+            margin-left: 10px;
+            border-radius: 0;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+
+        .hori-selector .left,
+        .hori-selector .right {
+            right: 10px;
+        }
+
+        .hori-selector .left {
+            top: -25px;
+            left: auto;
+        }
+
+        .hori-selector .right {
+            bottom: -25px;
+        }
+
+        .hori-selector .left:before {
+            left: -25px;
+            top: -25px;
+        }
+
+        .hori-selector .right:before {
+            bottom: -25px;
+            left: -25px;
+        }
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/hompage/login}"><i class="fas fa-tachometer-alt"></i>Home</a>
+            </li>
+            <li class="nav-item active" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/canteens}"><i class="far fa-address-book"></i>Order</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>History</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>LOGOUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<section id="list1" class="container">
+    <div class="card__container">
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">ORDER HISTORY</h2>
+                <p class="card__description">
+                    Check your all order history
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">ORDER SOME FOOD!</h2>
+                <p class="card__description">
+                    You can place an order through our affiliated partners here.
+                </p>
+                <a th:href="@{/canteens}" class="card__button">order > </a>
+            </div>
+        </article>
+    </article>
+    </div>
+</section>
+<section id="list2" class="container">
+    <div class="card__container">
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">TRANSACTION HISTORY</h2>
+                <p class="card__description">
+                    Check your all transaction history
+                </p>
+                <a href="#" class="card__button">Check > </a>
+            </div>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">MENU</h2>
+                <p class="card__description">
+                    Edit your menu here
+                </p>
+                <a th:href="@{/canteens}" class="card__button">edit > </a>
+            </div>
+        </article>
+        </article>
+        <article class="card__article">
+            <div class="card__data">
+                <h2 class="card__name">TENANT</h2>
+                <p class="card__description">
+                    Edit your tenant here
+                </p>
+                <a th:href="@{/canteens}" href="#" class="card__button">edit > </a>
+            </div>
+        </article>
+        </article>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('[id="list1"]').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PEMBELI') {
+                    $('[id="list1"]').show();
+                }
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('[id="list2"]').hide();
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (data) {
+                if (data.role === 'PENJUAL') {
+                    $('[id="list2"]').show();
+                }
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    });
+
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return "";
+    }
+
+</script>
+<script>
+    function test() {
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top": itemPosNewAnimTop.top + "px",
+            "left": itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("mouseenter", "li", function (e) {
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top": itemPosNewAnimTop.top + "px",
+                "left": itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    $(window).on('resize', function () {
+        setTimeout(function () {
+            test();
+        }, 500);
+    });
+
+    $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").slideToggle(300);
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    jQuery(document).ready(function ($) {
+        var path = window.location.pathname.split("/").pop();
+        if (path == '') {
+            path = 'index.html';
+        }
+        var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+        target.parent().addClass('active');
+    });
+</script>
+
+
+</body>
+
+</html>

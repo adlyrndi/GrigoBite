@@ -490,6 +490,9 @@
                                             <!-- Access properties of the menu object -->
                                             <h5 class="card-title" th:text="${menu.nama}"></h5>
                                             <p class="card-subtitle small mb-0" th:text="${menu.deskripsi}"></p>
+                                            <div type="hidden" id="menuId" th:text="${menu.id}"></div>
+                                            <button class="btn btn-outline-light btn-sm me-2 mr-3 mt-3 ">X</button>
+
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
@@ -680,6 +683,20 @@
         event.preventDefault();
 
     }
+    //BELUM FIX
+    // function deleteMenu(menuId) {
+    //     var tenantId = document.getElementById('tenantIdContainer').textContent.trim();
+    //     $.ajax({
+    //         url: '/menus/delete/'+menuId,
+    //         type: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + getCookie('jwt')
+    //         },
+    //     });
+    //     window.location.href = '/menus/'+tenantId;
+    //     event.preventDefault();
+    //
+    // }
     function incrementQuantity(button) {
         var quantityElement = button.parentNode.querySelector('.quantity');
         var quantity = parseInt(quantityElement.innerText);

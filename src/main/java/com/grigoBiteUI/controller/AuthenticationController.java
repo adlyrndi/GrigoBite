@@ -54,7 +54,7 @@ public class AuthenticationController {
             jwtCookie.setPath("/");
             response.addCookie(jwtCookie);
 
-            return "redirect:/homepage";
+            return "redirect:/homepage/login";
         } catch(RuntimeException e)
         {
             model.addAttribute("loginError", true);

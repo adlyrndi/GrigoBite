@@ -71,7 +71,7 @@ public class MenuController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('menu:crud')")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         menuService.deleteMenuById(id);
