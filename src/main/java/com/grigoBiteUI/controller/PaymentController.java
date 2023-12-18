@@ -63,12 +63,14 @@ public class PaymentController {
         Transaction pay = paymentService.pay(requestPayment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PostMapping("/top-up")
     @PreAuthorize("hasAuthority('canteen:crud')")
     public ResponseEntity<Canteen> createTopUp(RequestTopUp requestTopUp) {
         Transaction pay = paymentService.topup(requestTopUp);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     private Integer getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && ((Authentication) authentication).getPrincipal() instanceof User) {
