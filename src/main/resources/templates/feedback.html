@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+    :root {
+        --header-height: 3rem;
+
+        --first-color: #d17f47;
+        --nav-color : #423e57;
+        --first-color-darker: rgb(255,140,0);
+        --first-color-alt: rgb(44, 68, 100);
+        --test: #FF4500;
+        --first-color-alt-dark: rgb(63, 17, 31);
+        --title-color: #382f2f;
+        --text-color: #3a2d2d;
+        --text-color-light: #FFFFFF;
+        --newcolor : #24243e;
+        --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        --container-color: rgb(253, 222, 224);
+
+        /* Font & Typography */
+        --font: 'BioRhyme', serif;
+        --h1-size: 1.5rem;
+        --h2-size: 1.25rem;
+        --h3-size: 1rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+        --normal-font-size: .938rem;
+        --biggest-font-size: 2.25rem;
+
+        /* Font Weight */
+        --font-regular: 400;
+        --font-bold: 700;
+
+        /* Margin */
+        --margin-1: .5rem;
+        --margin-2: 1rem;
+        --margin-3: 1.5rem;
+        --margin-4: 2rem;
+        --margin-5: 2.5rem;
+        --margin-6: 3rem;
+
+        /* Z-index */
+        --z-tooltip: 10;
+        --z-fixed: 100;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: --font;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    }
+    .main{
+        width: 350px;
+        height: 500px;
+        background: red;
+        overflow: hidden;
+        background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+    }
+    #chk{
+        display: none;
+    }
+    .signup{
+        position: relative;
+        width:100%;
+        height: 100%;
+        flex-direction: column;
+    }
+    label{
+        color: #fff;
+        font-size: 2.3em;
+        justify-content: center;
+        display: flex;
+        margin: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .5s ease-in-out;
+    }
+    input{
+        width: 60%;
+        height: 20px;
+        background: var(--first-color);
+        justify-content: center;
+        display: flex;
+        margin: 20px auto;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
+
+    button{
+        width: 60%;
+        height: 40px;
+        margin: 10px auto;
+        justify-content: center;
+        display: block;
+        color: #fff;
+        background: var(--first-color);
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 20px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        transition: .2s ease-in;
+        cursor: pointer;
+        font: var(--font);
+    }
+
+    button:hover{
+        background: var(--first-color);
+    }
+    .login{
+        height: 500px;
+        background: var(--first-color);
+        border-radius: 60% / 10%;
+        transform: translateY(-110px);
+        transition: .8s ease-in-out;
+    }
+    .login label{
+        color: var(--text-color-light);
+        transform: scale(.6);
+    }
+
+    #chk:checked ~ .login{
+        transform: translateY(-500px);
+    }
+    #chk:checked ~ .login label{
+        transform: scale(1);
+    }
+    #chk:checked ~ .signup label{
+        transform: scale(0);
+    }
+
+    select {
+        width: 65%;
+        height: 40px;
+        background: #e0dede;
+        justify-content: center;
+        display: flex;
+        margin: 20px auto;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
+.feedback-form {
+        background: none; /* Remove background image */
+        height: auto; /* Adjust height as needed */
+        padding: 20px; /* Add padding for better spacing */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feedback-form label {
+        font-size: 1.5em;
+        color: #fff; /* Adjust text color */
+        margin-bottom: 10px; /* Add margin below labels */
+    }
+
+    .feedback-form textarea {
+        width: 100%; /* Adjust width */
+        height: 150px; /* Adjust height */
+        margin: 10px auto; /* Center the textarea */
+        padding-left: 2px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
+
+    .feedback-form button {
+        width: 65%;
+        height: 40px;
+        margin-top: 20px; /* Adjust margin */
+        color: #fff;
+        background: var(--first-color);
+        font-size: 1em;
+        font-weight: bold;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        transition: .2s ease-in;
+        cursor: pointer;
+        font: var(--font);
+    }
+    .rating {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 20px auto;
+    }
+
+
+    .rating input {
+        display: none; /* Hide the radio buttons */
+    }
+
+    .rating label {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--first-color);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
+    }
+
+
+    .rating input:checked+label {
+        background: var(--first-color-darker);
+    }
+
+    .rating button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--first-color);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
+        border: none;
+        outline: none;
+    }
+
+    .rating button:hover {
+        background-color: #24243e;
+    }
+    .feedback-form button:hover {
+        background: #24243e;
+    }
+    .rating button.active {
+        background: var(--first-color-darker);
+    }
+</style>
+<head>
+    <title>Feedback Form</title>
+</head>
+<body>
+<div class="main feedback-form">
+    <div class="signup">
+        <!-- Feedback form -->
+        <form action="/submit-feedback" method="POST">
+            <label for="feedback" aria-hidden="true">Feedback</label>
+            <textarea name="feedback" id="feedback" placeholder="Your feedback" required=""></textarea>
+            <label for="feedback" aria-hidden="true">Rating</label>
+            <div class="rating">
+                <button class="btn1" type="button" id="rating1" onclick="handleClick(1)">1</button>
+                <button class="btn1" type="button" id="rating2" onclick="handleClick(2)">2</button>
+                <button class="btn1" type="button" id="rating3" onclick="handleClick(3)">3</button>
+                <button class="btn1" type="button" id="rating4" onclick="handleClick(4)">4</button>
+                <button class="btn1" type="button" id="rating5" onclick="handleClick(5)">5</button>
+            </div>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+</div>
+<script>
+    function handleClick(rating) {
+        // Lakukan sesuatu dengan ID rating yang diperoleh, misalnya kirim ke server atau tampilkan di konsol
+        console.log("Rating clicked:", rating);
+
+        // Reset class 'active' dari semua tombol
+        document.querySelectorAll('.rating button').forEach(btn => btn.classList.remove('active'));
+
+        // Tambahkan class 'active' pada tombol yang diklik
+        document.getElementById('rating' + rating).classList.add('active');
+    }
+</script>
+</body>
+</html>
