@@ -41,7 +41,7 @@ public class PesananController {
         return new ResponseEntity<>(pesanans, HttpStatus.OK);
     }
 
-    @GetMapping("/pembeli/{id}")
+    @GetMapping("/pembeli/{id}")    
     public ResponseEntity<List<Pesanan>> getPesanansByPembeliId(@PathVariable Long id) {
         List<Pesanan> pesanans = pesananService.findByPembeliId(id);
         return new ResponseEntity<>(pesanans, HttpStatus.OK);
