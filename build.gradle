@@ -1,19 +1,15 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '3.0.6'
+	id 'io.spring.dependency-management' version '1.1.0'
 	id 'jacoco'
 	id 'org.sonarqube' version '4.0.0.2929'
 }
 
-java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 
 wrapper {
-	gradleVersion = '7.3' // Use the version specified in gradle-wrapper.properties
+	gradleVersion = '8.5' // Use the version specified in gradle-wrapper.properties
 }
 
 configurations {
