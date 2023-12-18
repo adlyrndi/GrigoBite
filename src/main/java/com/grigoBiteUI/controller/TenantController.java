@@ -84,5 +84,18 @@ public class TenantController {
 //        return optionalTenant.isPresent() && optionalTenant.get().getOwner().getUsername().equals(authentication.getName());
 //    }
 
+    @GetMapping("/{idTenant}/idPenjual")
+    public ResponseEntity<Integer> getPenjualIdByTenantId(@PathVariable Long idTenant) {
+        Integer penjualId = tenantService.getPenjualIdByTenantId(idTenant);
+
+        if (penjualId != null) {
+            return ResponseEntity.ok(penjualId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
 }

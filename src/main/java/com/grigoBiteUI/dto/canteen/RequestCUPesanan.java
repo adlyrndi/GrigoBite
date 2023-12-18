@@ -1,5 +1,6 @@
 package com.grigoBiteUI.dto.canteen;
 
+import com.grigoBiteUI.model.PesananDetails;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestCUPesanan {
-    @NotNull(message = "Pembeli ID cannot be null")
-    private Long idPembeli;
 
-    @NotNull(message = "Penjual ID cannot be null")
-    private Long idPenjual;
+    private String idPembeli;
 
-    private List<Long> listMakananIds;
+    private String idPenjual;
+
+    private List<List<Object>> menuItems;
 }

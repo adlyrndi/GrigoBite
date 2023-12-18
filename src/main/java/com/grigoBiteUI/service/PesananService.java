@@ -5,6 +5,7 @@ import com.grigoBiteUI.dto.canteen.RequestUPesanan;
 import com.grigoBiteUI.dto.RequestFeedback;
 import com.grigoBiteUI.model.CanteenList.Menu;
 import com.grigoBiteUI.model.Pesanan;
+import com.grigoBiteUI.model.PesananDetails;
 import com.grigoBiteUI.model.auth.Pembeli;
 import com.grigoBiteUI.model.auth.Penjual;
 import com.grigoBiteUI.repository.MenuRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PesananService {
@@ -30,23 +32,48 @@ public class PesananService {
         this.userRepository = userRepository;
     }
 
-    public Pesanan createPesanan(RequestCUPesanan requestCUPesanan) {
-        Pembeli pembeli = (Pembeli) userRepository.findById(requestCUPesanan.getIdPembeli());
-        Penjual penjual = (Penjual) userRepository.findById(requestCUPesanan.getIdPenjual());
+    public  PesananDetails createFromList(List<Object> list) {
+        Optional<Menu> optMenu = Optional.ofNullable(menuRepository.findById((Integer) list.get(0)));
+        if (optMenu.isPresent()) {
+            Menu menu = optMenu.get();
+            PesananDetails pesananDetails = new PesananDetails();
+            pesananDetails.setMenu(menu);
+            pesananDetails.setQuantity((Integer) list.get(1));
+            pesananDetails.setSubTotal(Long.valueOf((Integer) list.get(2)));
+            return pesananDetails;
+        }
+        return null;
+    }
 
-        List<Menu> listMakanan = menuRepository.findAllById(requestCUPesanan.getListMakananIds());
-        List<Pesanan> list = pembeli.getListPesanan();
+    public Pesanan createPesanan(RequestCUPesanan requestCUPesanan) {
+        System.out.println(requestCUPesanan);
+        Pembeli pembeli = (Pembeli) userRepository.findById(Long.parseLong(requestCUPesanan.getIdPembeli()));
+        Penjual penjual = (Penjual) userRepository.findById(Long.parseLong(requestCUPesanan.getIdPenjual()));
+
+        List<List<Object>> listMakanan = requestCUPesanan.getMenuItems();
+        List<Pesanan> listPembeli = pembeli.getListPesanan();
+        List<Pesanan> listPenjual = penjual.getListPesanan();
+
+        List<PesananDetails> listPesananDetails = new ArrayList<>();
+
+        for (List<Object> listItem : listMakanan) {
+            PesananDetails pesananDetails = createFromList(listItem);
+            listPesananDetails.add(pesananDetails);
+        }
 
         Pesanan pesanan = Pesanan.builder()
                 .statusPesanan("Incomplete")
                 .statusTransaksi("Belum Dibayar")
                 .pembeli(pembeli)
                 .penjual(penjual)
-                .listMakanan(listMakanan)
+                .listPesananDetails(listPesananDetails)
                 .build();
 
-        list.add(pesanan);
-        pembeli.setListPesanan(list);
+        listPembeli.add(pesanan);
+        listPenjual.add(pesanan);
+
+        pembeli.setListPesanan(listPembeli);
+        penjual.setListPesanan(listPenjual);
 
         return pesananRepository.save(pesanan);
     }
@@ -54,11 +81,8 @@ public class PesananService {
 
         Pesanan pesanan = pesananRepository.getReferenceById(requestUPesanan.getPesananId());
 
-        if (!pesanan.getStatusTransaksi().equals("Belum Dibayar")) {
-            throw new RuntimeException();
-        }
-        List<Menu> listMakanan = menuRepository.findAllById(requestUPesanan.getListMakananIds());
-        pesanan.setListMakanan(listMakanan);
+        List<PesananDetails> listMakanan = requestUPesanan.getMenuItems();
+        pesanan.setListPesananDetails(listMakanan);
 
         return pesananRepository.save(pesanan);
     }
