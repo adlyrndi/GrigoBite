@@ -396,7 +396,7 @@
 <section class="h-100 h-custom">
     <div class="container py-5 h-100 shadow-sm rounded-8">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-7"> <!-- Apply col-lg-7 directly to the card div -->
+            <div class="col-lg-7">
                 <div class="card">
                     <div class="card-body p-4">
                         <!-- Fixed Order History -->
@@ -406,56 +406,43 @@
                         </div>
                         <!-- Scrollable container for order history cards -->
                         <div class="order-history-container overflow-auto mt-3" style="max-height: 350px; padding-right: 15px; margin-bottom: 15px;">
-
                             <!-- Place all your order history cards here -->
-                            <div class="card-item mb-3 shadow-lg rounded-8">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="d-flex flex-row align-items-center">
-                                            <div class="ms-3">
-                                                <h5 class="card-title">Order #57473829</h5>
-                                                <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                                <p class="card-subtitle small mb-0">Name: adly renadi</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row align-items-center">
-                                            <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><div class="card-item mb-3 shadow-lg rounded-8">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="ms-3">
-                                            <h5 class="card-title">Order #57473829</h5>
-                                            <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                            <p class="card-subtitle small mb-0">Name: adly renadi</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="card-item mb-3 shadow-lg rounded-8">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="ms-3">
-                                            <h5 class="card-title">Order #57473829</h5>
-                                            <p class="card-subtitle small mb-0">Date: 13 Sep, 2021</p>
-                                            <p class="card-subtitle small mb-0">Name: adly renadi</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <span class="badge fs-6 fw-normal bg-tint-success text-success">Completed</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- ... (existing cards) ... -->
                         </div>
-                            <!-- Repeat similar card structure for other order history items -->
-                            <!-- ... -->
+
+                        <!-- Feedback Form Button -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackModal">
+                            Open Feedback Form
+                        </button>
+
+                        <!-- Feedback Form Modal -->
+                        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Feedback form -->
+                                        <form action="/submit-feedback" method="POST">
+                                            <label for="feedback" aria-hidden="true">Feedback</label>
+                                            <textarea name="feedback" id="feedback" placeholder="Your feedback" required=""></textarea>
+                                            <label for="feedback" aria-hidden="true">Rating</label>
+                                            <div class="rating">
+                                                <button class="btn1" type="button" id="rating1" onclick="handleClick(1)">1</button>
+                                                <button class="btn1" type="button" id="rating2" onclick="handleClick(2)">2</button>
+                                                <button class="btn1" type="button" id="rating3" onclick="handleClick(3)">3</button>
+                                                <button class="btn1" type="button" id="rating4" onclick="handleClick(4)">4</button>
+                                                <button class="btn1" type="button" id="rating5" onclick="handleClick(5)">5</button>
+                                            </div>
+                                            <button type="submit">Submit Feedback</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
