@@ -695,7 +695,7 @@
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + getCookie('jwt')
-            },igin
+            },
             data: $('#tenantForm').serialize()+'&idPenjual=' + userData.id,
             success: function (data) {
                 window.location.href = '/tenants/'+canteenId;
