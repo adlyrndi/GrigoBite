@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFILE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+
+        :root {
+            --header-height: 3rem;
+            --first-color: #d17f47;
+            --nav-color: #423e57;
+            --first-color-darker: rgb(255, 140, 0);
+            --first-color-alt: rgb(44, 68, 100);
+            --test: #FF4500;
+            --first-color-alt-dark: rgb(63, 17, 31);
+            --title-color: #382f2f;
+            --text-color: #3a2d2d;
+            --text-color-light: #FFFFFF;
+            --newcolor: #24243e;
+            --container-color: rgb(253, 222, 224);
+            --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            --color-item: #2c4464;
+
+            /* Font & Typography */
+            --font: 'BioRhyme', serif;
+            --h1-size: 1.5rem;
+            --h2-size: 1.25rem;
+            --h3-size: 1rem;
+            --small-font-size: .813rem;
+            --smaller-font-size: .75rem;
+            --normal-font-size: .938rem;
+            --biggest-font-size: 2.25rem;
+
+            /* Font Weight */
+            --font-regular: 400;
+            --font-bold: 700;
+
+            /* Margin */
+            --margin-1: .5rem;
+            --margin-2: 1rem;
+            --margin-3: 1.5rem;
+            --margin-4: 2rem;
+            --margin-5: 2.5rem;
+            --margin-6: 3rem;
+
+            /* Z-index */
+            --z-tooltip: 10;
+            --z-fixed: 100;
+        }
+
+        .bodycolor {
+            background-color: var(--newcolor);
+        }
+
+        body {
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            font-family: var(--font);
+            font-size: var(--normal-font-size);
+            color: var(--text-color);
+            scrollbar-width: thin;
+            scrollbar-color: var(--first-color) var(--text-color-light);
+            min-height: 100vh;
+        }
+        .padding {
+            padding: 3rem !important
+        }
+
+        .user-card-full {
+            overflow: hidden;
+        }
+
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            border: none;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow */
+            border: 3px solid rgba(0, 0, 0, 0.125); /* Added border */
+            transition: box-shadow 0.3s, transform 0.3s; /* Added transition */
+            box-sizing: border-box; /* Added border-box */
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Added hover effect */
+            transform: scale(1.13); /* Added hover effect */
+        }
+
+
+        .m-r-0 {
+            margin-right: 0px;
+        }
+
+        .m-l-0 {
+            margin-left: 0px;
+        }
+
+        .user-card-full .user-profile {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .bg-c-lite-green {
+            background-color: var(--color-item);
+        }
+
+        .user-profile {
+            padding: 20px 0;
+        }
+
+        .card-block {
+            padding: 1.25rem;
+            color: var(--first-color-darker);
+        }
+
+        .m-b-25 {
+            margin-bottom: 25px;
+        }
+
+        .img-radius {
+            border-radius: 5px;
+        }
+
+
+
+        h6 {
+            font-size: 14px;
+        }
+
+        .card .card-block p {
+            line-height: 25px;
+        }
+
+        @media only screen and (min-width: 1400px){
+            p {
+                font-size: 14px;
+            }
+        }
+
+        .card-block {
+            padding: 1.25rem;
+        }
+
+        .b-b-default {
+            border-bottom: 1px solid var(--text-color-light);
+        }
+
+        .m-b-20 {
+            margin-bottom: 20px;
+        }
+
+        .p-b-5 {
+            padding-bottom: 5px !important;
+        }
+
+        .card .card-block p {
+            line-height: 25px;
+        }
+
+        .m-b-10 {
+            margin-bottom: 10px;
+        }
+
+        .text-muted {
+            color: #ece8e8FF !important;
+        }
+
+        .b-b-default {
+            border-bottom: 1px solid var(--text-color-light);
+        }
+
+        .f-w-600 {
+            font-weight: 600;
+        }
+
+        .m-b-20 {
+            margin-bottom: 20px;
+        }
+
+        .m-t-40 {
+            margin-top: 20px;
+        }
+
+        .p-b-5 {
+            padding-bottom: 5px !important;
+        }
+
+        .m-b-10 {
+            margin-bottom: 10px;
+        }
+
+        .m-t-40 {
+            margin-top: 20px;
+        }
+
+        .user-card-full .social-link li {
+            display: inline-block;
+        }
+
+        .user-card-full .social-link li a {
+            font-size: 20px;
+            margin: 0 10px 0 0;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 100vh !important;
+            }
+        }
+        .navbar {
+            margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+            position: fixed;
+            top: 0; /* Navbar diposisikan di bagian atas halaman */
+            width: 100%;
+            z-index: 1000;
+            font-family: var(--font);
+        }
+        .nav-link {
+            margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
+            position: fixed;
+            top: 0; /* Navbar diposisikan di bagian atas halaman */
+            width: 100%;
+            z-index: 1000;
+            font-weight: 1000;
+            color: var(--text-color-light);
+        }
+        .navbar-logo {
+            padding: 15px;
+            color: var(--first-color);
+            font-weight: 900;
+        }
+
+        .navbar-mainbg {
+            background-color: #1d204d;
+            padding: 0px;
+        }
+
+        #navbarSupportedContent {
+            overflow: hidden;
+            position: relative;
+        }
+
+        #navbarSupportedContent ul {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #navbarSupportedContent ul li a i {
+            margin-right: 10px;
+        }
+
+        #navbarSupportedContent li {
+            list-style-type: none;
+            float: left;
+        }
+
+        #navbarSupportedContent ul li a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+            padding: 20px 20px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        #navbarSupportedContent>ul>li.active>a {
+            color: var(--text-color-light);
+            background-color: transparent;
+            transition: all 0.7s;
+        }
+
+        #navbarSupportedContent a:not(:only-child):after {
+            content: "\f105";
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 14px;
+            font-family: "Font Awesome 5 Free";
+            display: inline-block;
+            padding-right: 3px;
+            vertical-align: middle;
+            font-weight: 900;
+            transition: 0.5s;
+        }
+
+        #navbarSupportedContent .active>a:not(:only-child):after {
+            transform: rotate(90deg);
+        }
+
+        .hori-selector {
+            display: inline-block;
+            position: absolute;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background-color: var(--first-color);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .hori-selector .right,
+        .hori-selector .left {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--first-color);
+            bottom: 10px;
+        }
+
+        .hori-selector .right {
+            right: -25px;
+        }
+
+        .hori-selector .left {
+            left: -25px;
+        }
+
+        .hori-selector .right:before,
+        .hori-selector .left:before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1d204d;
+        }
+
+        .hori-selector .right:before {
+            bottom: 0;
+            right: -25px;
+        }
+
+        .hori-selector .left:before {
+            bottom: 0;
+            left: -25px;
+        }
+
+        @media (min-width: 992px) {
+            .navbar-expand-custom {
+                -ms-flex-flow: row nowrap;
+                flex-flow: row nowrap;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+            }
+
+            .navbar-expand-custom .navbar-nav {
+                -ms-flex-direction: row;
+                flex-direction: row;
+            }
+
+            .navbar-expand-custom .navbar-toggler {
+                display: none;
+            }
+
+            .navbar-expand-custom .navbar-collapse {
+                display: -ms-flexbox!important;
+                display: flex!important;
+                -ms-flex-preferred-size: auto;
+                flex-basis: auto;
+            }
+        }
+
+        @media (max-width: 991px) {
+            #navbarSupportedContent ul li a {
+                padding: 12px 20px; /* Sesuaikan padding sesuai kebutuhan */
+            }
+
+            .hori-selector {
+                margin-top: 0px;
+                margin-left: 10px;
+                border-radius: 0;
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+            }
+
+            .hori-selector .left,
+            .hori-selector .right {
+                right: 10px;
+            }
+
+            .hori-selector .left {
+                top: -25px;
+                left: auto;
+            }
+
+            .hori-selector .right {
+                bottom: -25px;
+            }
+
+            .hori-selector .left:before {
+                left: -25px;
+                top: -25px;
+            }
+
+            .hori-selector .right:before {
+                bottom: -25px;
+                left: -25px;
+            }
+        }
+        .container {
+            max-width: 1200px; /* Sesuaikan dengan lebar maksimum yang diinginkan */
+            margin: auto;
+        }
+
+        .h-custom {
+            height: calc(100vh - var(--header-height)); /* Sesuaikan dengan tinggi header jika ada */
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+        html, body {
+            height: 102%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bodycolor {
+            background-color: var(--newcolor);
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            width: 100%; /* agar container tetap responsif */
+        }
+        .box-title {
+            text-align: center;
+            background-color: var(--first-color);
+            color: var(--text-color-light);
+            padding: 0.3rem;
+            border-radius: 1rem;
+            margin: 1rem auto 1rem; /* Center horizontally with auto margin */
+            width: 33%;
+            display: flex;
+            flex-direction: column; /* Change to column direction */
+            justify-content: center; /* Center children horizontally */
+            align-items: center;
+            margin-bottom: 0;
+            border: 2px solid var(--text-color-light);
+            margin-bottom: 15px/* Center children vertically */
+        }
+        .card-block.text-center {
+            position: relative;
+        }
+
+        .card-block.text-center::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px; /* Adjust the width of the vertical line */
+            background-color: #fff; /* Set the color of the vertical line */
+        }
+
+        .col-sm-4 {
+            padding-left: 15px; /* Adjust padding for better alignment */
+        }
+        button.card__button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--first-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.card__button:hover {
+            background-color: var(--first-color-darker);
+        }
+
+    </style>
+</head>
+
+<body class="bodycolor">
+<div class=""container style="margin-top: 150px;"></div>
+<nav class="navbar navbar-expand-custom navbar-mainbg mb-4">
+    <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/hompage/login}"><i class="fas fa-tachometer-alt"></i>Home</a>
+            </li>
+            <li class="nav-item active" style="margin-right: 50px;">
+                <a class="nav-link" th:href="@{/canteens}"><i class="far fa-address-book"></i>Order</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>History</a>
+            </li>
+            <li class="nav-item" style="margin-right: 50px;">
+                <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>LOGOUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<section class="h-100 h-custom">
+    <div class="box-title">
+        <h2 style="padding-top: 15px;">Profile</h2>
+        <p th:text="${'Canteen : ' + canteen}"></p>
+    </div>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25">
+                                        <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
+                                    </div>
+                                    <h6 class="f-w-600">YAJUJ SURMAJUJ</h6>
+                                    <p></p>Seller</p>
+                                    <button class=" card__button mt-2">Edit Profile</button>
+                                    <button class=" card__button mt-2">History</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-8" style="background-color: var(--color-item);">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600 mt-4">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Full Name</p>
+                                            <h6 class="text-muted f-w-400">Yajuj Surmajuj</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Nick Name</p>
+                                            <h6 class="text-muted f-w-400">njuj</h6>
+                                        </div>
+                                    </div>
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Contact</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Phone Number </p>
+                                            <h6 class="text-muted f-w-400">08123312123</h6>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-Uo2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script>
+    function test() {
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top": itemPosNewAnimTop.top + "px",
+            "left": itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("mouseenter", "li", function (e) {
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top": itemPosNewAnimTop.top + "px",
+                "left": itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    $(window).on('resize', function () {
+        setTimeout(function () {
+            test();
+        }, 500);
+    });
+
+    $(".navbar-toggler").click(function () {
+        $(".navbar-collapse").slideToggle(300);
+        setTimeout(function () {
+            test();
+        });
+    });
+
+    jQuery(document).ready(function ($) {
+        var path = window.location.pathname.split("/").pop();
+        if (path == '') {
+            path = 'index.html';
+        }
+        var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+        target.parent().addClass('active');
+    });
+</script>
+<!--MASIH SALAHA HMM-->
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $.ajax({-->
+<!--            url: '/auth/user',-->
+<!--            type: 'GET',-->
+<!--            headers: {-->
+<!--                'Authorization': 'Bearer ' + getCookie('jwt')-->
+<!--            },-->
+<!--            success: function (user) {-->
+<!--                // Mendapatkan elemen <a> dengan ID "profileLink" dan memperbarui atribut "th:href"-->
+<!--                var profileLink = $('[id="profileLink"]');-->
+<!--                var userId = user.id; // asumsi user.id berisi user ID-->
+<!--                profileLink.attr('th:href', '@{/profile/get/{userId}(userId=' + userId + ')}');-->
+
+<!--               -->
+<!--            },-->
+<!--            error: function (error) {-->
+<!--                console.error('Error fetching user data:', error);-->
+<!--            }-->
+<!--        });-->
+
+<!--        function getCookie(cookieName) {-->
+<!--        }-->
+<!--    });-->
+
+
+<!--</script>-->
+
+</body>
+
+</html>

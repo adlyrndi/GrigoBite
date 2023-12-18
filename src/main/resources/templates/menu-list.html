@@ -189,9 +189,14 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 20px;
+            font-size: 30px;
             cursor: pointer;
+            color: #FFFFFF;
         }
+        .close:hover{
+            color: #FFFFFF;
+        }
+
 
         h2 {
             color: var(--text-color-light);
@@ -430,6 +435,41 @@
                 left: -25px;
             }
         }
+        .bordered{
+            background-color: var(--color-item);
+            border: 2px solid var(--text-color-light); /* Add border */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+            color: var(--text-color-light);
+        }
+        .btn1{
+            background-color: var(--color-item) ;
+        }
+        .btn1:hover{
+        background-color: var(--first-color);
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #FFFFFF;
+        }
+        .close:hover{
+            color: #FFFFFF;
+        }
+        .closed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 23px;
+            cursor: pointer;
+            color: #FFFFFF;
+            background-color: var(--first-color);
+        }
+
+
     </style>
 </head>
 <body>
@@ -490,8 +530,9 @@
                                         <div class="ms-3">
                                             <!-- Access properties of the menu object -->
                                             <h5 class="card-title" th:text="${menu.nama}"></h5>
-                                            <p class="card-subtitle small mb-0" th:text="${menu.deskripsi}"></p>
-                                            <button type="button" class="btn btn-info btn-block btn-lg" th:onclick="'deleteMenu(\'' + ${menu.id} + '\')'"></button>
+                                            <p class="card-subtitle small mb-0" th:text="${menu.deskripsi}"style="margin-bottom: 20px"></p>
+                                            <a id ="indecBtn4" class="bordered btn1 closed" th:onclick="'deleteMenu(\'' + ${menu.id} + '\')'" style="margin-top: 20px">X</a>
+<!--                                            <button type="button" class="btn btn-info btn-block btn-lg" th:onclick="'deleteMenu(\'' + ${menu.id} + '\')'"></button>-->
 
 
                                         </div>
@@ -502,7 +543,7 @@
                                         <div id="#indecBtn1" class="d-flex align-items-center">
                                             <h5 id="#indecBtn3" class="fw-normal mb-0 quantity">0</h5>
                                         </div>
-                                        <button id="#indecBtn2"class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5" onclick="incrementQuantity(this)">+</button>
+                                            <button id="#indecBtn2"class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5" onclick="incrementQuantity(this)">+</button>
                                         <div style="width: 150px;">
                                             <h5 class="mb-0" th:text="'Rp.' + ${menu.harga}"></h5>
                                         </div>
@@ -582,6 +623,7 @@
         $('[id="#indecBtn1"]').hide();
         $('[id="#indecBtn2"]').hide();
         $('[id="#indecBtn3"]').hide();
+        $('#indecBtn4').show();
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -595,6 +637,7 @@
                     $('[id="#indecBtn1"]').show();
                     $('[id="#indecBtn2"]').show();
                     $('[id="#indecBtn3"]').show();
+                    $('#indecBtn4').hide();
                 }
 
             },
