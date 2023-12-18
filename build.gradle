@@ -11,6 +11,11 @@ plugins {
 wrapper {
 	gradleVersion = '8.5' // Use the version specified in gradle-wrapper.properties
 }
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+}
 
 configurations {
 	compileOnly {
