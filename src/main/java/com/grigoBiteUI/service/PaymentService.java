@@ -39,9 +39,9 @@ public class PaymentService {
         double saldoPembeliBefore =  pembeli.getSaldo();
 
         StringBuilder namesString = new StringBuilder();
-        for (Menu menu : requestPayment.getPesanan().getListMakanan()) {
-            namesString.append(menu.getNama()).append(", ");
-        }
+//        for (Menu menu : requestPayment.getPesanan().getListMakanan()) {
+//            namesString.append(menu.getNama()).append(", ");
+//        }
         if (namesString.length() > 0) {
             namesString.delete(namesString.length() - 2, namesString.length());
         } // ini untuk deskirpsi makanan atau menu apa saja yang dibeli

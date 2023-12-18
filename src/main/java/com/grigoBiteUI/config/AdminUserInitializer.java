@@ -1,6 +1,8 @@
 package com.grigoBiteUI.config;
 import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.model.CanteenList.Tenant;
+import com.grigoBiteUI.model.auth.Penjual;
+import com.grigoBiteUI.repository.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,10 @@ public class AdminUserInitializer implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private CanteenRepository canteenRepository;
+
+    @Autowired
+    private TenantRepository tenantRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,6 +48,22 @@ public class AdminUserInitializer implements CommandLineRunner {
                     .fakultas("Fasilkom")
                     .build();
             canteenRepository.save(canteen);
+
+
+            Penjual penjual = Penjual.builder()
+                    .username("cipeng")
+                    .nickname("Cipengyajuj")
+                    .active(true)
+                    .password(passwordEncoder.encode("yajuj"))
+                    .role("PENJUAL")
+                    .saldo(0)
+                    .build();
+
+            userRepository.save(penjual);
+
+
+
+
 
 
 

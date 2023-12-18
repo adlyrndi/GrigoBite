@@ -38,12 +38,9 @@ public class Pesanan {
     @ManyToOne
     private Penjual penjual;
 
-    @OneToMany
-    private List<Menu> listMakanan;
 
-    private void calculateTotalPesanan() {
-        this.totalPesanan = listMakanan.stream().mapToDouble(Menu::getHarga).sum();
-    }
+    @OneToMany(mappedBy = "pesanan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PesananDetails> listPesananDetails;
 
     @OneToOne
     private Feedback feedback;
