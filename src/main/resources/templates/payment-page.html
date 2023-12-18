@@ -459,26 +459,28 @@
                                         <h6 class="mb-0">Total Price</h6>
                                     </div>
                                     <form>
-                                        <hr class="my-1" style="background-color: white;">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p  class="mb-1 mt-2">Total items </p>
-                                            <p class="mb-1">5</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p class="mb-1">Total price</p>
-                                            <p class="mb-1">Rp.481.800</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p class="mb-1">GrigoPay after Payment</p>
-                                            <p class="mb-1">Rp.281.800</p>
-                                        </div>
-                                        <button type="button" class="btn btn-info btn-block btn-lg">
-                                            <div class="d-flex justify-content-between">
-
-                                                <span>Rp.481.800</span>
-                                                <span>Pay <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                        <div th:each="pesanans : ${pesanan}">
+                                            <hr class="my-1" style="background-color: white;">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p  class="mb-1 mt-2">Total items </p>
+                                                <p class="mb-1"th:text="${pesanans.totalPesanan}"></p>
                                             </div>
-                                        </button>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p class="mb-1">Total price</p>
+                                                <p id="totalPesanan" class="mb-1" th:text="${pesanans.totalPesanan}"></p>
+
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p class="mb-1">GrigoPay after Payment</p>
+                                                <p id="afterCut" class="mb-1"></p>
+                                            </div>
+                                            <button type="button" class="btn btn-info btn-block btn-lg" id="btnPay" th:attr="data-total-pesanan=${pesanans.totalPesanan}">
+                                                <div class="d-flex justify-content-between">
+                                                    <span th:text="${pesanans.totalPesanan}"></span>
+                                                    <span>Pay <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                                </div>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -559,6 +561,43 @@
                 console.error('Error fetching user data:', error);
             }
         });
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (user) {
+                console.log(user.role);
+
+                // Setelah mendapatkan informasi pengguna, ambil total pesanan
+                var totalPesanan = parseInt($('#totalPesanan').text());
+
+                // Kurangkan saldo dengan total pesanan
+                var saldoSetelahPembayaran = user.saldo - totalPesanan;
+                if (saldoSetelahPembayaran < 0) {
+                    // Jika saldo tidak mencukupi, nonaktifkan tombol dan ubah warna
+                    $('#btnPay').prop('disabled', true).addClass('btn-secondary');
+                }
+                else{
+                    hitungSaldo(saldoSetelahPembayaran);
+                }
+                // Menampilkan saldo pengguna di elemen HTML
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+
+        function hitungSaldo(saldo) {
+            // Menampilkan saldo pengguna di elemen HTML
+            var formattedSaldo = 'Rp.' + saldo.toLocaleString('id-ID');
+            $('#afterCut').text(formattedSaldo);
+        }
     });
 
     function test() {
