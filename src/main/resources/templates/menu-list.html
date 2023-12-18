@@ -192,6 +192,18 @@
             font-size: 20px;
             cursor: pointer;
         }
+        closed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 23px;
+            cursor: pointer;
+            color: #FFFFFF;
+            background-color: var(--first-color);
+        }
+        .dlosed :hover{
+            background-color: var(--first-color-darker);
+        }
 
         h2 {
             color: var(--text-color-light);
@@ -491,7 +503,7 @@
                                             <!-- Access properties of the menu object -->
                                             <h5 class="card-title" th:text="${menu.nama}"></h5>
                                             <p class="card-subtitle small mb-0" th:text="${menu.deskripsi}"></p>
-                                            <button type="button" class="btn btn-info btn-block btn-lg" th:onclick="'deleteMenu(\'' + ${menu.id} + '\')'"></button>
+                                            <a id="indecBtn4" type="button" class="card__button closed" style="margin-top: 15px;background-color: var(--first-color)" th:onclick="'deleteMenu(\'' + ${menu.id} + '\')'">X</a>
 
 
                                         </div>
@@ -582,6 +594,8 @@
         $('[id="#indecBtn1"]').hide();
         $('[id="#indecBtn2"]').hide();
         $('[id="#indecBtn3"]').hide();
+        $('#indecBtn4').show();
+
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -595,6 +609,7 @@
                     $('[id="#indecBtn1"]').show();
                     $('[id="#indecBtn2"]').show();
                     $('[id="#indecBtn3"]').show();
+                    $('#indecBtn4').hide();
                     userId = data.id;
                 }
 
