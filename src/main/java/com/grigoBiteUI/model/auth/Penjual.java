@@ -24,7 +24,7 @@ import java.util.List;
 @Entity
 public class Penjual extends User {
 
-    private double saldo;
+    private double saldo = 0;
 
     @JsonIgnore
     @OneToOne

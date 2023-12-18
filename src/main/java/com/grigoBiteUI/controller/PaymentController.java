@@ -32,12 +32,14 @@ public class PaymentController {
         this.pesananService = pesananService;
 
     }
-    @GetMapping("")
-    public String showCheckoutPage(Model model) {
-        var userId = getCurrentUserId();
-        List<Pesanan> pesanan = pesananService.getPesananIncompleteFromPembeli(userId);
+
+    @GetMapping("/{orderId}")
+    public String showCheckoutPage(@PathVariable Long orderId, Model model) {
+        // Gunakan orderId untuk mendapatkan data pesanan sesuai kebutuhan
+        List<Pesanan> pesanan = pesananService.getPesananIncompleteFromPembeli(orderId);
+        // Tambahkan data pesanan ke model untuk digunakan di halaman
         model.addAttribute("pesanan", pesanan);
-//        model.addAttribute("saldo",((Pembeli)user).getSaldo());
+
         return "payment-page";
     }
 

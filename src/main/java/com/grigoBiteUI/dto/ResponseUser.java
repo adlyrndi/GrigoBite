@@ -1,5 +1,6 @@
 package com.grigoBiteUI.dto;
 
+import com.grigoBiteUI.model.auth.Pembeli;
 import com.grigoBiteUI.model.auth.Penjual;
 import com.grigoBiteUI.model.auth.User;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,15 @@ public class ResponseUser {
             if(((Penjual) user).getTenant() != null)
                 this.tenantId = String.valueOf(((Penjual) user).getIdTenant());
         }
+        if ("PEMBELI".equals(user.getRole())) {
+            if (user instanceof Pembeli) {
+                this.saldo = String.valueOf(((Pembeli) user).getSaldo());
+            }
+        }
+        else if ("PENJUAL".equals(user.getRole())) {
+            this.saldo = String.valueOf(((Penjual) user).getSaldo());
+        }
+
     }
 
     private  String tenantId;
@@ -38,6 +48,7 @@ public class ResponseUser {
     private String nickname;
     private String phoneNumber;
     private String profilePicture;
+    private String saldo;
 
     public static List<ResponseUser> fromEntities(List<User> users) {
         return users.stream()

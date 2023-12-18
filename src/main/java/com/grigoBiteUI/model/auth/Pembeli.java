@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "pembeli")
 public class Pembeli extends User {
 
-    private double saldo;
+    private double saldo=0;
 
     @OneToMany(mappedBy = "pembeli", cascade = CascadeType.ALL)
     private List<Pesanan> listPesanan;
