@@ -104,4 +104,19 @@ public class TenantService {
 
         return null;
     }
+
+    public Integer getPenjualIdByTenantId(Long idTenant) {
+        Optional<Tenant> tenantOptional = tenantRepository.findById(idTenant);
+
+        if (tenantOptional.isPresent()) {
+            Tenant tenant = tenantOptional.get();
+            Penjual penjual = tenant.getPenjual();
+
+            if (penjual != null) {
+                return penjual.getId();
+            }
+        }
+
+        return null;
+    }
 }

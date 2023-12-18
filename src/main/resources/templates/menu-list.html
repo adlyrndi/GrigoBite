@@ -483,7 +483,7 @@
                     <!-- Sample card repeated multiple times for illustration -->
                     <div class="scrollable-container overflow-auto">
                         <!-- Use th:each to loop through the list of menus -->
-                        <div th:each="menu : ${menus}" class="card card-item mb-3 shadow-lg rounded-8">
+                        <div th:id="'menu_' + ${menu.id}" th:each="menu : ${menus}" class="card card-item mb-3 shadow-lg rounded-8">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center">
@@ -504,7 +504,7 @@
                                         </div>
                                         <button id="#indecBtn2"class="btn btn-outline-light btn-sm ms-2 me-2 ml-3 mr-5" onclick="incrementQuantity(this)">+</button>
                                         <div style="width: 150px;">
-                                            <h5 class="mb-0" th:text="'Rp.' + ${menu.harga}"></h5>
+                                            <h5 th:id="'hargaMenu_' + ${menu.id}" class="mb-0" th:text="'Rp.' + ${menu.harga}"></h5>
                                         </div>
                                         <a href="#!" style="color: var(--first-color);"><i class="fas fa-trash-alt"></i></a>
                                     </div>
@@ -541,13 +541,11 @@
                 <div id="buttonCart" class="card card-item text-white rounded-8  mt-2">
                     <div class="card-body body-color">
                         <form>
-                            <!-- <hr class="my-4" style="background-color: white;"> -->
-                            <button type="button" class="btn btn-info btn-block btn-lg ">
+                            <button type="button" class="btn btn-info btn-block btn-lg" onclick="addToCart()">
                                 <div class="d-flex justify-content-center">
                                     <span>Add To Cart <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                 </div>
                             </button>
-
                         </form>
                     </div>
                 </div>
@@ -576,6 +574,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    var userId;
+
     $(document).ready(function () {
         $('#buttonCart').hide();
         $('[id="#indecBtn"]').hide();
@@ -595,7 +595,9 @@
                     $('[id="#indecBtn1"]').show();
                     $('[id="#indecBtn2"]').show();
                     $('[id="#indecBtn3"]').show();
+                    userId = data.id;
                 }
+
 
             },
             error: function (error) {
@@ -603,6 +605,8 @@
             }
         });
     });
+
+
 
     $(document).ready(function () {
         $('#addMenu').hide();
@@ -616,6 +620,7 @@
                 if (data.role === 'PENJUAL') {
                     $('#addMenu').show();
                 }
+
 
             },
             error: function (error) {
@@ -640,6 +645,66 @@
             modal.style.display = "none";
         }
     }
+
+    function addToCart() {
+        var pesanan = calculateTotal();
+
+        var idPembeli = userId;
+
+        var idTenant = document.getElementById('tenantIdContainer').textContent.trim();
+
+        console.log('Id Tenant:', idTenant);
+
+        fetch('/tenants/'+idTenant+'/idPenjual')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error fetching idPenjual');
+                }
+            })
+            .then(idPenjual => {
+                // Now you have both idPembeli and idPenjual
+                console.log('Buyer ID:', idPembeli);
+                console.log('Seller ID:', idPenjual);
+
+                // Continue with your logic, for example, send the order to the server
+                sendOrderToServer(idPembeli, idPenjual, pesanan);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function sendOrderToServer(idPembeli, idPenjual, pesanan) {
+        // Construct the request object
+        var requestCUPesanan = {
+            idPembeli: idPembeli,
+            idPenjual: idPenjual,
+            menuItems: Object.values(pesanan).map(item => {
+                return [item.menuId, item.quantity, item.subtotal];
+            })
+        };
+
+        console.log('JSON Stringified Request:', JSON.stringify(requestCUPesanan));
+
+        // Make the API request to add the order
+        fetch('/pesanans/create', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestCUPesanan),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Order created successfully');
+                } else {
+                    throw new Error('Error creating order');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
 
     function getCookie(cookieName) {
         var name = cookieName + "=";
@@ -705,6 +770,39 @@
         event.preventDefault();
 
     }
+
+    function calculateTotal() {
+        var pesanan = {};
+        var total = 0;
+
+        var quantityElements = document.querySelectorAll('.quantity');
+
+        quantityElements.forEach(function (quantityElement, index) {
+            var quantity = parseInt(quantityElement.textContent);
+
+            if (quantity > 0) {
+                var hargaElement = document.getElementById('hargaMenu_' + (index + 1));
+                var harga = parseInt(hargaElement.textContent.replace('Rp.', '').trim());
+                var idMenu= document.getElementById('')
+
+                var subtotal = quantity * harga;
+
+                pesanan[index + 1] = {
+                    menuId: index+1,
+                    quantity: quantity,
+                    subtotal: subtotal
+                };
+
+                total += subtotal;
+            }
+        });
+
+        console.log(pesanan);
+        console.log('Total: Rp.' + total);
+
+        return pesanan;
+    }
+
     //BELUM FIX
     // function deleteMenu(menuId) {
     //     var tenantId = document.getElementById('tenantIdContainer').textContent.trim();
@@ -720,18 +818,20 @@
     //
     // }
     function incrementQuantity(button) {
-        var quantityElement = button.parentNode.querySelector('.quantity');
-        var quantity = parseInt(quantityElement.innerText);
-        quantity++;
-        quantityElement.innerText = quantity;
+        var quantityElement = button.previousElementSibling.querySelector('.quantity');
+        var currentQuantity = parseInt(quantityElement.textContent);
+
+        quantityElement.textContent = currentQuantity + 1;
+        calculateTotal(); // Call the function to update the total
     }
 
     function decrementQuantity(button) {
-        var quantityElement = button.parentNode.querySelector('.quantity');
-        var quantity = parseInt(quantityElement.innerText);
-        if (quantity > 0) {
-            quantity--;
-            quantityElement.innerText = quantity;
+        var quantityElement = button.nextElementSibling.querySelector('.quantity');
+        var currentQuantity = parseInt(quantityElement.textContent);
+
+        if (currentQuantity > 0) {
+            quantityElement.textContent = currentQuantity - 1;
+            calculateTotal(); // Call the function to update the total
         }
     }
     //INI BELOM PIX YAH

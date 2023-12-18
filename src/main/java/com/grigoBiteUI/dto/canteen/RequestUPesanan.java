@@ -1,5 +1,6 @@
 package com.grigoBiteUI.dto.canteen;
 
+import com.grigoBiteUI.model.PesananDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,5 @@ import java.util.List;
 @NoArgsConstructor
 public class RequestUPesanan {
     private Long pesananId;
-    private List<Long> listMakananIds;
+    private List<PesananDetails> menuItems;
 }
