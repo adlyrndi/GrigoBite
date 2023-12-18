@@ -1,5 +1,6 @@
 package com.grigoBiteUI.config;
 import com.grigoBiteUI.model.CanteenList.Canteen;
+import com.grigoBiteUI.model.CanteenList.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +42,8 @@ public class AdminUserInitializer implements CommandLineRunner {
                     .fakultas("Fasilkom")
                     .build();
             canteenRepository.save(canteen);
+
+
 
 
         }
