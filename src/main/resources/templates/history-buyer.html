@@ -427,7 +427,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- Feedback form -->
-                                        <form action="/submit-feedback" method="POST">
+                                        <form id="feedbackForm"action="/submit-feedback" method="POST">
                                             <label for="feedback" aria-hidden="true">Feedback</label>
                                             <textarea name="feedback" id="feedback" placeholder="Your feedback" required=""></textarea>
                                             <label for="feedback" aria-hidden="true">Rating</label>
@@ -520,6 +520,57 @@
         }
         var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
         target.parent().addClass('active');
+    });
+    function submitFeedback() {
+
+        var feedbackForm = document.forms["feedbackForm"];
+        $.ajax({
+            type: "POST",
+            url: "/feedback/create",
+            data: {
+                feedback: feedbackForm["feedback"].value,
+                rating: selectedRating
+            },
+            success: function(response) {
+                // Update the feedback container with the new feedback
+                updateFeedbackContainer(response);
+
+                // Close the feedback modal
+                $('#feedbackModal').modal('hide');
+            },
+            error: function(error) {
+                console.error("Error submitting feedback:", error);
+                // Handle error if needed
+            }
+        });
+    }
+    function updateFeedbackContainer(feedback) {
+
+        var feedbackContainer = $(".order-history-container");
+
+
+        feedbackContainer.append('<div class="card-item">' + feedback.feedback + '</div>');
+    }
+
+    $(".rating .btn1").click(function() {
+
+        $(".rating .btn1").removeClass("active");
+
+
+        $(this).addClass("active");
+    });
+
+    function handleClick(rating) {
+
+        $(".rating .btn1").removeClass("active");
+
+        $("#rating" + rating).addClass("active");
+    }
+
+    $(document).ready(function() {
+        $("#submitFeedbackBtn").click(function() {
+            submitFeedback();
+        });
     });
 </script>
 

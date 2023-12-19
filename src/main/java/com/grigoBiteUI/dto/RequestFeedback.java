@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class RequestFeedback {
 
     private Long idPesanan;
-    @NotNull(message = "Pembeli ID cannot be null")
+
     private Long idPembeli;
 
-    @NotNull(message = "Penjual ID cannot be null")
+
     private Long idPenjual;
 
     @NotNull(message = "Rating is still empty")
