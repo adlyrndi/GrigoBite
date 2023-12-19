@@ -19,7 +19,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double saldoPembeliAfter;
 
     @ManyToOne
     private User userPenjual;
