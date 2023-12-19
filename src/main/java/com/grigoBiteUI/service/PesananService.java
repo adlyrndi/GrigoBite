@@ -72,6 +72,8 @@ public class PesananService {
                 .listPesananDetails(listPesananDetails)
                 .build();
 
+        System.out.println(pesanan.getListPesananDetails().toString());
+
         listPembeli.add(pesanan);
         listPenjual.add(pesanan);
 
