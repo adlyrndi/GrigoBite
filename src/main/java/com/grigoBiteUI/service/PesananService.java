@@ -56,10 +56,13 @@ public class PesananService {
 
         List<PesananDetails> listPesananDetails = new ArrayList<>();
 
+
         for (List<Object> listItem : listMakanan) {
             PesananDetails pesananDetails = createFromList(listItem);
             listPesananDetails.add(pesananDetails);
         }
+
+
 
         Pesanan pesanan = Pesanan.builder()
                 .statusPesanan("Incomplete")
