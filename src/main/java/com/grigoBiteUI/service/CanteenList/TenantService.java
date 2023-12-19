@@ -42,6 +42,9 @@ public class TenantService {
         return tenantRepository.findByIdAndCanteenId(id, canteenId);
     }
 
+    public Optional<Tenant> getTenantByIdAja(Long id) {
+        return tenantRepository.findById(id);
+    }
     public Tenant createTenant(Long canteenId, RequestCUTenant requestCUTenant) {
         Canteen canteen = getCanteenById(canteenId);
         Tenant tenant = mapRequestToTenant(requestCUTenant);

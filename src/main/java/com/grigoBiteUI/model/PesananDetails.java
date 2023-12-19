@@ -21,7 +21,7 @@ public class PesananDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Menu menu;
 
     @NotNull(message = "Quantity cannot be null")

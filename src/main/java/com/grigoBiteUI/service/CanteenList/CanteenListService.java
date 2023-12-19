@@ -40,7 +40,6 @@ public class CanteenListService {
         return canteen;
     }
 
-    // Save or update a canteen
     public Canteen updateCanteen(Long id, RequestCUCanteen requestCUCanteen) {
         Canteen existingCanteen = canteenRepository.findById(id)
                 .orElseThrow(() -> new CanteenNotFoundException("Canteen with ID " + id + " not found"));
