@@ -38,6 +38,7 @@ public class PaymentController {
         // Gunakan orderId untuk mendapatkan data pesanan sesuai kebutuhan
         List<Pesanan> pesanan = pesananService.getPesananIncompleteFromPembeli(orderId);
         // Tambahkan data pesanan ke model untuk digunakan di halaman
+        model.addAttribute("orderId",orderId);
         model.addAttribute("pesanan", pesanan);
 
         return "payment-page";
@@ -58,17 +59,19 @@ public class PaymentController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('canteen:crud')")
-    public ResponseEntity<Canteen> createTransaction(RequestPayment requestPayment) {
+    @PreAuthorize("hasAuthority('transaksi:crud')")
+    public ResponseEntity<Transaction> createTransaction(RequestPayment requestPayment) {
         Transaction pay = paymentService.pay(requestPayment);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(pay,HttpStatus.CREATED);
     }
+
     @PostMapping("/top-up")
-    @PreAuthorize("hasAuthority('canteen:crud')")
-    public ResponseEntity<Canteen> createTopUp(RequestTopUp requestTopUp) {
+//    @PreAuthorize("hasAuthority('transaksi:cru')")
+    public ResponseEntity<Transaction> createTopUp(RequestTopUp requestTopUp) {
         Transaction pay = paymentService.topup(requestTopUp);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(pay,HttpStatus.CREATED);
     }
+
     private Integer getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && ((Authentication) authentication).getPrincipal() instanceof User) {

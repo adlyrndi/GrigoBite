@@ -192,6 +192,18 @@
             font-size: 20px;
             cursor: pointer;
         }
+        closed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 23px;
+            cursor: pointer;
+            color: #FFFFFF;
+            background-color: var(--first-color);
+        }
+        .dlosed :hover{
+            background-color: var(--first-color-darker);
+        }
 
         .closed {
             position: absolute;
@@ -549,7 +561,8 @@
                                     <button type="submit" class="card__button" onclick="submitForm()">Add Menu</button>
                                 </form>
                             </div>
-                    </div>
+                        </div>
+
 
                         <div id="buttonCart" class="card card-item text-white rounded-8  mt-2">
                             <div class="card-body body-color">
@@ -576,12 +589,11 @@
                             </div>
                         </div>
 
+                </div>
             </div>
-
         </div>
-    </div>
-    </div>
         <div type="hidden" id="tenantIdContainer" th:text="${tenantId}"></div>
+    </div>
     </div>
 </section>
 
@@ -596,6 +608,7 @@
         $('[id="#indecBtn2"]').hide();
         $('[id="#indecBtn3"]').hide();
         $('#indecBtn4').show();
+
         $.ajax({
             url: '/auth/user',
             type: 'GET',
@@ -609,7 +622,7 @@
                     $('[id="#indecBtn1"]').show();
                     $('[id="#indecBtn2"]').show();
                     $('[id="#indecBtn3"]').show();
-                    $('#indecBtn4').show();
+                    $('#indecBtn4').hide();
                     userId = data.id;
                 }
 
@@ -817,6 +830,7 @@
 
         return pesanan;
     }
+
 
     //BELUM FIX
     // function deleteMenu(menuId) {

@@ -11,6 +11,7 @@ import com.grigoBiteUI.repository.MenuRepository;
 import com.grigoBiteUI.repository.PesananRepository;
 import com.grigoBiteUI.repository.TransactionRepository;
 import com.grigoBiteUI.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,16 +57,14 @@ public class PaymentService {
                     .userPembeli(pembeli)
                     .build();
             penjual.setSaldo(penjual.getSaldo()+requestPayment.getAmount());
-            transactionRepository.save(transaction);
-
-            return transaction;
+            return  transactionRepository.save(transaction);
         }
         else{
             throw new RuntimeException("Insufficient balance");
         }
     }
 
-    public Transaction topup(RequestTopUp requestTopUp) {
+    public Transaction topup(@Valid RequestTopUp requestTopUp) {
         Pembeli pembeli = (Pembeli) userRepository.findById(requestTopUp.getIdPembeli());
         double saldoAwal = pembeli.getSaldo();
         pembeli.setSaldo(saldoAwal+requestTopUp.getAmount());

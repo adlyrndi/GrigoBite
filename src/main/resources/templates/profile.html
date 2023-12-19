@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>PROFILE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           integrity="sha512-PzBpFgrJV+rHHd4+2XJgpHXj2lC1v2TQ4WTN9Q3UZN04ntF0KbQKBsGhIyxN90daGyLqFFGFzqW2I+IcV8z/JA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,7 +32,7 @@
             --newcolor: #24243e;
             --container-color: rgb(253, 222, 224);
             --body-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-            --color-item : #2c4464;
+            --color-item: #2c4464;
 
             /* Font & Typography */
             --font: 'BioRhyme', serif;
@@ -72,98 +72,153 @@
             color: var(--text-color);
             scrollbar-width: thin;
             scrollbar-color: var(--first-color) var(--text-color-light);
+            min-height: 100vh;
+        }
+        .padding {
+            padding: 3rem !important
+        }
+
+        .user-card-full {
+            overflow: hidden;
         }
 
 
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            border: none;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow */
+            border: 3px solid rgba(0, 0, 0, 0.125); /* Added border */
+            transition: box-shadow 0.3s, transform 0.3s; /* Added transition */
+            box-sizing: border-box; /* Added border-box */
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Added hover effect */
+            transform: scale(1.13); /* Added hover effect */
+        }
+
+
+        .m-r-0 {
+            margin-right: 0px;
+        }
+
+        .m-l-0 {
+            margin-left: 0px;
+        }
+
+        .user-card-full .user-profile {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .bg-c-lite-green {
+            background-color: var(--color-item);
+        }
+
+        .user-profile {
+            padding: 20px 0;
+        }
+
+        .card-block {
+            padding: 1.25rem;
+            color: var(--first-color-darker);
+        }
+
+        .m-b-25 {
+            margin-bottom: 25px;
+        }
+
+        .img-radius {
+            border-radius: 5px;
+        }
+
+
+
+        h6 {
+            font-size: 14px;
+        }
+
+        .card .card-block p {
+            line-height: 25px;
+        }
+
+        @media only screen and (min-width: 1400px){
+            p {
+                font-size: 14px;
+            }
+        }
+
+        .card-block {
+            padding: 1.25rem;
+        }
+
+        .b-b-default {
+            border-bottom: 1px solid var(--text-color-light);
+        }
+
+        .m-b-20 {
+            margin-bottom: 20px;
+        }
+
+        .p-b-5 {
+            padding-bottom: 5px !important;
+        }
+
+        .card .card-block p {
+            line-height: 25px;
+        }
+
+        .m-b-10 {
+            margin-bottom: 10px;
+        }
+
+        .text-muted {
+            color: #ece8e8FF !important;
+        }
+
+        .b-b-default {
+            border-bottom: 1px solid var(--text-color-light);
+        }
+
+        .f-w-600 {
+            font-weight: 600;
+        }
+
+        .m-b-20 {
+            margin-bottom: 20px;
+        }
+
+        .m-t-40 {
+            margin-top: 20px;
+        }
+
+        .p-b-5 {
+            padding-bottom: 5px !important;
+        }
+
+        .m-b-10 {
+            margin-bottom: 10px;
+        }
+
+        .m-t-40 {
+            margin-top: 20px;
+        }
+
+        .user-card-full .social-link li {
+            display: inline-block;
+        }
+
+        .user-card-full .social-link li a {
+            font-size: 20px;
+            margin: 0 10px 0 0;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
         @media (min-width: 1025px) {
             .h-custom {
                 height: 100vh !important;
             }
-        }
-
-        /* Adjusted card styles */
-        .card {
-            background-color: var(--color-item);
-            border: 2px solid var(--text-color-light); /* Add border */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-            color: var(--text-color-light);
-            width: 120%; /* Sesuaikan lebar kartu sesuai keinginan Anda */
-            margin: 0 auto; /* Untuk membuatnya menjadi kartu tengah */
-
-        }
-        .card-item {
-            background-color: var(--color-item);
-            border: 2px solid var(--text-color-light);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: var(--text-color-light);
-            margin-bottom: 20px;
-        }
-
-        .card-body {
-            padding: 20px;
-
-        }
-
-        .card img {
-            width: 65px;
-            border-radius: 8px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-        }
-
-        .card-subtitle {
-            font-size: 0.813rem;
-        }
-
-        .card-text {
-            font-size: 1rem;
-        }
-
-        .btn-outline-light {
-            color: var(--text-color-light);
-        }
-
-        .btn-outline-light:hover {
-            background-color: var(--newcolor);
-        }
-
-        .fa-trash-alt {
-            color: var(--first-color);
-        }
-        .order-history {
-            text-align: center;
-            background-color: var(--first-color);
-            border: 2px solid var(--text-color-light);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            margin-bottom: 20px;
-            color: var(--text-color-light);
-        }
-        /* Scroll styling */
-        .order-history-container {
-            max-height: 500px; /* Tentukan tinggi maksimum yang diinginkan */
-            overflow-y: auto; /* Tambahkan properti ini untuk membuatnya scrollable */
-            padding-left: 10px; /* Tambahkan padding kiri sesuai kebutuhan Anda */
-        }
-
-        /* Scroll styling */
-        ::-webkit-scrollbar {
-            width: 7px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--text-color-light);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background-color: var(--color-item);
-            border-radius: 10px; /* Add border-radius to make it rounded */
         }
         .navbar {
             margin-bottom: 0; /* Menghilangkan margin bawah pada navbar */
@@ -360,12 +415,93 @@
                 left: -25px;
             }
         }
+        .container {
+            max-width: 1200px; /* Sesuaikan dengan lebar maksimum yang diinginkan */
+            margin: auto;
+        }
+
+        .h-custom {
+            height: calc(100vh - var(--header-height)); /* Sesuaikan dengan tinggi header jika ada */
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+        html, body {
+            height: 102%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bodycolor {
+            background-color: var(--newcolor);
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            width: 100%; /* agar container tetap responsif */
+        }
+        .box-title {
+            text-align: center;
+            background-color: var(--first-color);
+            color: var(--text-color-light);
+            padding: 0.3rem;
+            border-radius: 1rem;
+            margin: 1rem auto 1rem; /* Center horizontally with auto margin */
+            width: 33%;
+            display: flex;
+            flex-direction: column; /* Change to column direction */
+            justify-content: center; /* Center children horizontally */
+            align-items: center;
+            margin-bottom: 0;
+            border: 2px solid var(--text-color-light);
+            margin-bottom: 15px/* Center children vertically */
+        }
+        .card-block.text-center {
+            position: relative;
+        }
+
+        .card-block.text-center::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px; /* Adjust the width of the vertical line */
+            background-color: #fff; /* Set the color of the vertical line */
+        }
+
+        .col-sm-4 {
+            padding-left: 15px; /* Adjust padding for better alignment */
+        }
+        button.card__button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--first-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.card__button:hover {
+            background-color: var(--first-color-darker);
+        }
 
     </style>
 </head>
 
 <body class="bodycolor">
-<nav class="navbar navbar-expand-custom navbar-mainbg">
+<div class=""container style="margin-top: 150px;"></div>
+<nav class="navbar navbar-expand-custom navbar-mainbg mb-4">
     <a class="navbar-brand navbar-logo ml-5" href="#">GRIGOBITE</a>
     <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -394,53 +530,48 @@
 </nav>
 
 <section class="h-100 h-custom">
-    <div class="container py-5 h-100 shadow-sm rounded-8">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-7">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <!-- Fixed Order History -->
-                        <div class="order-history align-items-center" style="height: 100px; overflow: hidden;">
-                            <h4 class="mb-2 bold">Order History</h4>
-                            <p class="mb-0 small mt-2 card-subtitle"> User: Adly renadi </p>
-                        </div>
-                        <!-- Scrollable container for order history cards -->
-                        <div class="order-history-container overflow-auto mt-3" style="max-height: 350px; padding-right: 15px; margin-bottom: 15px;">
-                            <!-- Place all your order history cards here -->
-                            <!-- ... (existing cards) ... -->
-                        </div>
-
-                        <!-- Feedback Form Button -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackModal">
-                            Open Feedback Form
-                        </button>
-
-                        <!-- Feedback Form Modal -->
-                        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+    <div class="box-title">
+        <h2 style="padding-top: 15px;">Profile</h2>
+        <p th:text="${'Canteen : ' + canteen}"></p>
+    </div>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25">
+                                        <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                     </div>
-                                    <div class="modal-body">
-                                        <!-- Feedback form -->
-                                        <form id="feedbackForm"action="/submit-feedback" method="POST">
-                                            <label for="feedback" aria-hidden="true">Feedback</label>
-                                            <textarea name="feedback" id="feedback" placeholder="Your feedback" required=""></textarea>
-                                            <label for="feedback" aria-hidden="true">Rating</label>
-                                            <div class="rating">
-                                                <button class="btn1" type="button" id="rating1" onclick="handleClick(1)">1</button>
-                                                <button class="btn1" type="button" id="rating2" onclick="handleClick(2)">2</button>
-                                                <button class="btn1" type="button" id="rating3" onclick="handleClick(3)">3</button>
-                                                <button class="btn1" type="button" id="rating4" onclick="handleClick(4)">4</button>
-                                                <button class="btn1" type="button" id="rating5" onclick="handleClick(5)">5</button>
-                                            </div>
-                                            <button type="submit">Submit Feedback</button>
-                                        </form>
+                                    <h6 class="f-w-600">YAJUJ SURMAJUJ</h6>
+                                    <p></p>Seller</p>
+                                    <button class=" card__button mt-2">Edit Profile</button>
+                                    <button class=" card__button mt-2">History</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-8" style="background-color: var(--color-item);">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600 mt-4">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Full Name</p>
+                                            <h6 class="text-muted f-w-400">Yajuj Surmajuj</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Nick Name</p>
+                                            <h6 class="text-muted f-w-400">njuj</h6>
+                                        </div>
                                     </div>
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Contact</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Phone Number </p>
+                                            <h6 class="text-muted f-w-400">08123312123</h6>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -450,8 +581,7 @@
         </div>
     </div>
 </section>
-
-
+</div>
 
 <!-- Bootstrap JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -521,58 +651,35 @@
         var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
         target.parent().addClass('active');
     });
-    function submitFeedback() {
-
-        var feedbackForm = document.forms["feedbackForm"];
-        $.ajax({
-            type: "POST",
-            url: "/feedback/create",
-            data: {
-                feedback: feedbackForm["feedback"].value,
-                rating: selectedRating
-            },
-            success: function(response) {
-                // Update the feedback container with the new feedback
-                updateFeedbackContainer(response);
-
-                // Close the feedback modal
-                $('#feedbackModal').modal('hide');
-            },
-            error: function(error) {
-                console.error("Error submitting feedback:", error);
-                // Handle error if needed
-            }
-        });
-    }
-    function updateFeedbackContainer(feedback) {
-
-        var feedbackContainer = $(".order-history-container");
-
-
-        feedbackContainer.append('<div class="card-item">' + feedback.feedback + '</div>');
-    }
-
-    $(".rating .btn1").click(function() {
-
-        $(".rating .btn1").removeClass("active");
-
-
-        $(this).addClass("active");
-    });
-
-    function handleClick(rating) {
-
-        $(".rating .btn1").removeClass("active");
-
-        $("#rating" + rating).addClass("active");
-    }
-
-    $(document).ready(function() {
-        $("#submitFeedbackBtn").click(function() {
-            submitFeedback();
-        });
-    });
 </script>
+<!--MASIH SALAHA HMM-->
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $.ajax({-->
+<!--            url: '/auth/user',-->
+<!--            type: 'GET',-->
+<!--            headers: {-->
+<!--                'Authorization': 'Bearer ' + getCookie('jwt')-->
+<!--            },-->
+<!--            success: function (user) {-->
+<!--                // Mendapatkan elemen <a> dengan ID "profileLink" dan memperbarui atribut "th:href"-->
+<!--                var profileLink = $('[id="profileLink"]');-->
+<!--                var userId = user.id; // asumsi user.id berisi user ID-->
+<!--                profileLink.attr('th:href', '@{/profile/get/{userId}(userId=' + userId + ')}');-->
+
+<!--               -->
+<!--            },-->
+<!--            error: function (error) {-->
+<!--                console.error('Error fetching user data:', error);-->
+<!--            }-->
+<!--        });-->
+
+<!--        function getCookie(cookieName) {-->
+<!--        }-->
+<!--    });-->
+
+
+<!--</script>-->
 
 </body>
 

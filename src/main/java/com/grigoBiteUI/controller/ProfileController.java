@@ -2,12 +2,16 @@ package com.grigoBiteUI.controller;
 
 import com.grigoBiteUI.dto.RequestEdit;
 import com.grigoBiteUI.dto.ResponseProfile;
+import com.grigoBiteUI.model.CanteenList.Canteen;
 import com.grigoBiteUI.service.ProfileService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/profile")

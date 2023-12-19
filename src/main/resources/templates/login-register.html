@@ -78,6 +78,7 @@
         justify-content: center;
         display: flex;
         margin: 20px;
+        margin-bottom: 20px;
         font-weight: bold;
         cursor: pointer;
         transition: .5s ease-in-out;
@@ -117,7 +118,7 @@
         background: var(--first-color);
     }
     .login{
-        height: 500px;
+        height: 550px;
         background: var(--first-color);
         border-radius: 60% / 10%;
         transform: translateY(-110px);
@@ -179,7 +180,7 @@
     <div class="login">
         <form id="loginForm" th:action="@{/auth/login}" method="POST">
             <label for="chk" aria-hidden="true">Login</label>
-            <input th:name="username" type="text" placeholder="Email" required="">
+            <input th:name="username" type="text" placeholder="Email" required="" style="margin-top: 40px">
             <input th:name="password" type="password" placeholder="Password" required="">
             <input type="hidden" id="loginError" th:value="${loginError}" />
             <button style="background-color: #24243e;">Login</button>

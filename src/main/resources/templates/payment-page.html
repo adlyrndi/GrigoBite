@@ -80,6 +80,14 @@
                 height: 100vh !important;
             }
         }
+        .modal-form {
+            max-width: 300px;
+            margin:  0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
 
         /* Adjusted card styles */
         .card {
@@ -114,6 +122,36 @@
             flex-direction: column;
             height: 100%;
 
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: var(--color-item);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 380px;
+            max-width: 80%; /* Set a maximum width if necessary */
+            text-align: center;
+            margin: auto; /* Center the modal horizontally */
+            position: relative;
+            margin-top:200px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
         }
 
         .card img {
@@ -441,17 +479,35 @@
                                                 <h5 class="card-subtitle small mb-0">Payment method: GrigoPay</h5>
                                             </div>
                                         </div>
+                                        <div id="topUpModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal()">&times;</span>
+                                                <h2>To Up</h2>
+                                                <form id="topUpForm" class="modal-form">
+                                                    <div class="form-group">
+                                                        <label for="amount">Amount:</label>
+                                                        <input type="number" id="amount" name="amount" required>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-info btn-block btn-lg" onclick="submitForm()">
+                                                        Submit <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
                                         <!-- Mengganti tombol dengan gaya yang serupa -->
                                         <div class="d-flex flex-row align-items-center mt-3">
-                                            <button class="btn btn-info  btn-lg mb-0">
+                                            <article id="myBtn" class="btn btn-info  btn-lg mb-0">
+
                                                 <div class="d-flex justify-content-between">
                                                     <span>TOP UP</span> <i class="fas fa-long-arrow-alt-right ms-2"></i>
                                                 </div>
-                                            </button>
+                                           </article>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="card-item mb-2 shadow-lg rounded-8">
                                 <div class="card-body body-color">
@@ -459,26 +515,30 @@
                                         <h6 class="mb-0">Total Price</h6>
                                     </div>
                                     <form>
-                                        <hr class="my-1" style="background-color: white;">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p  class="mb-1 mt-2">Total items </p>
-                                            <p class="mb-1">5</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p class="mb-1">Total price</p>
-                                            <p class="mb-1">Rp.481.800</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <p class="mb-1">GrigoPay after Payment</p>
-                                            <p class="mb-1">Rp.281.800</p>
-                                        </div>
-                                        <button type="button" class="btn btn-info btn-block btn-lg">
-                                            <div class="d-flex justify-content-between">
-
-                                                <span>Rp.481.800</span>
-                                                <span>Pay <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                        <div th:each="pesanans : ${pesanan}">
+                                            <hr class="my-1" style="background-color: white;">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p  class="mb-1 mt-2">Total items </p>
+                                                <p class="mb-1"th:text="${pesanans.totalPesanan}"></p>
                                             </div>
-                                        </button>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p class="mb-1">Total price</p>
+                                                <p id="totalPesanan" class="mb-1" th:text="${pesanans.totalPesanan}"></p>
+
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <p class="mb-1">GrigoPay after Payment</p>
+                                                <p id="afterCut" class="mb-1"></p>
+                                            </div>
+                                            <button type="button" class="btn btn-info btn-block btn-lg" id="btnPay" th:attr="data-total-pesanan=${pesanans.totalPesanan}">
+                                                <div class="d-flex justify-content-between">
+                                                    <span th:text="${pesanans.totalPesanan}"></span>
+                                                    <span>Pay <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                                </div>
+                                                <div type="hidden" id="orderIdContainer" th:text="${orderId}"></div>
+                                                <div type="hidden" id="idUser"></div>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -497,7 +557,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-
+    var userData;
     $(document).ready(function () {
         console.log('hai')
         $.ajax({
@@ -507,6 +567,7 @@
                 'Authorization': 'Bearer ' + getCookie('jwt')
             },
             success: function (user) {
+                userData = user;
                 // Menampilkan saldo pengguna di elemen HTML
                 console.log(user.role)
                 displaySaldo(user.saldo);
@@ -521,6 +582,69 @@
             $('#saldoDisplay').text(formattedSaldo);
         }
     });
+    $(document).ready(function () {
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (user) {
+                // Menampilkan saldo pengguna di elemen HTML
+                console.log(user.role)
+                idUser(user.id);
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+        function idUser(id) {
+            // Menampilkan saldo pengguna di elemen HTML
+            $('#idUser').text(id);
+        }
+    });
+
+    var modal = document.getElementById("topUpModal");
+    var span = document.getElementsByClassName("close")[0];
+    var btn = document.getElementById("myBtn");
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+    function closeModal() {
+        modal.style.display = "none";
+    }
+    function submitForm() {
+        $.ajax({
+            url: '/payments/top-up',
+            type: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            data: $('#topUpForm').serialize()+'&idPembeli=' + userData.id,
+            success: function (data) {
+                // window.location.href = '/payments/'+orderId
+                console.log(data.amount)
+                console.log('successfully:', data);
+                closeModal();
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        event.preventDefault();
+
+    }
     function getCookie(cookieName) {
         var name = cookieName + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -560,6 +684,52 @@
             }
         });
     });
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/auth/user',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('jwt')
+            },
+            success: function (user) {
+                console.log(user.role);
+
+                // Setelah mendapatkan informasi pengguna, ambil total pesanan
+                var totalPesanan = parseInt($('#totalPesanan').text());
+
+                // Kurangkan saldo dengan total pesanan
+                var saldoSetelahPembayaran = user.saldo - totalPesanan;
+                if (saldoSetelahPembayaran < 0) {
+                    // Jika saldo tidak mencukupi, nonaktifkan tombol dan ubah warna
+                    $('#btnPay').prop('disabled', true).addClass('btn-secondary');
+                }
+                else{
+                    hitungSaldo(saldoSetelahPembayaran);
+                }
+                // Menampilkan saldo pengguna di elemen HTML
+
+            },
+            error: function (error) {
+                console.error('Error fetching user data:', error);
+            }
+        });
+
+        function hitungSaldo(saldo) {
+            // Menampilkan saldo pengguna di elemen HTML
+            var formattedSaldo = 'Rp.' + saldo.toLocaleString('id-ID');
+            $('#afterCut').text(formattedSaldo);
+        }
+    });
+    // Menutup modal jika pengguna mengklik di luar area formulir
+    window.onclick = function(event) {
+        var modal = document.getElementById('topUpModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+<script>
 
     function test() {
         var tabsNewAnim = $('#navbarSupportedContent');
