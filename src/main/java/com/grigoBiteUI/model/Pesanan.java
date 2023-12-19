@@ -28,7 +28,6 @@ public class Pesanan {
 
     private String statusPesanan = "Incomplete";
 
-    private double totalPesanan;
 
     private String statusTransaksi = "Belum Dibayar";
 
