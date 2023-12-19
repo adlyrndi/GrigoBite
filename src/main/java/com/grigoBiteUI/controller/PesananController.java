@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,16 @@ public class PesananController {
     @Autowired
     public PesananController(PesananService pesananService) {
         this.pesananService = pesananService;
+    }
+
+    @GetMapping("/pembeli/{id}")
+    public String cart(Model model, @PathVariable Long id) {
+        // Gunakan orderId untuk mendapatkan data pesanan sesuai kebutuhan
+        List<Pesanan> pesanan = pesananService.getPesananIncompleteFromPembeli(id);
+        // Tambahkan data pesanan ke model untuk digunakan di halaman
+        model.addAttribute("pesanan", pesanan);
+
+        return "cart";
     }
 
     @PostMapping("/create")
@@ -41,16 +52,5 @@ public class PesananController {
         return new ResponseEntity<>(pesanans, HttpStatus.OK);
     }
 
-    @GetMapping("/pembeli/{id}")    
-    public ResponseEntity<List<Pesanan>> getPesanansByPembeliId(@PathVariable Long id) {
-        List<Pesanan> pesanans = pesananService.findByPembeliId(id);
-        return new ResponseEntity<>(pesanans, HttpStatus.OK);
-    }
-
-    @GetMapping("/penjual/{id}")
-    public ResponseEntity<List<Pesanan>> getPesanansByPenjualId(@PathVariable Long id) {
-        List<Pesanan> pesanans = pesananService.findByPenjualId(id);
-        return new ResponseEntity<>(pesanans, HttpStatus.OK);
-    }
 
 }

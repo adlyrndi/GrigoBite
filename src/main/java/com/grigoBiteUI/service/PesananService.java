@@ -51,10 +51,11 @@ public class PesananService {
         Penjual penjual = (Penjual) userRepository.findById(Long.parseLong(requestCUPesanan.getIdPenjual()));
 
         List<List<Object>> listMakanan = requestCUPesanan.getMenuItems();
+
         List<Pesanan> listPembeli = pembeli.getListPesanan();
         List<Pesanan> listPenjual = penjual.getListPesanan();
-
         List<PesananDetails> listPesananDetails = new ArrayList<>();
+
 
         for (List<Object> listItem : listMakanan) {
             PesananDetails pesananDetails = createFromList(listItem);

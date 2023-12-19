@@ -50,7 +50,6 @@ public class PaymentService {
         if(saldoPembeliBefore<requestPayment.getAmount()){
             pembeli.setSaldo(requestPayment.getAmount()-saldoPembeliBefore);
             Transaction transaction = Transaction.builder()
-                    .saldoPembeliAfter(requestPayment.getAmount()-saldoPembeliBefore)
                     .amount(requestPayment.getAmount())
                     .description("Membeli " + namesString.toString())
                     .userPenjual(penjual)
