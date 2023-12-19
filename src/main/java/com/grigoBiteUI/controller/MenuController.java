@@ -2,15 +2,14 @@ package com.grigoBiteUI.controller;
 
 import com.grigoBiteUI.model.CanteenList.Menu;
 import com.grigoBiteUI.dto.canteen.RequestCUMenu;
+import com.grigoBiteUI.model.CanteenList.Tenant;
 import com.grigoBiteUI.service.CanteenList.MenuService;
+import com.grigoBiteUI.service.CanteenList.TenantService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +23,22 @@ public class MenuController {
 
     private final MenuService menuService;
 
+    private final TenantService tenantService;
+
     @Autowired
-    public MenuController(MenuService menuService) {
+    public MenuController(MenuService menuService, TenantService tenantService) {
         this.menuService = menuService;
+        this.tenantService = tenantService;
     }
 
     @GetMapping("/{tenantId}")
     public String getAllMenusByTenantId(@PathVariable Long tenantId, Model model) {
         List<Menu> menus = menuService.getAllMenusByTenantId(tenantId);
+        Optional<Tenant> tenant = tenantService.getTenantByIdAja(tenantId);
+        String tenantName = tenant.get().getNamaTenant();
         model.addAttribute("menus", menus);
         model.addAttribute("tenantId", tenantId);
+        model.addAttribute("tenant", tenantName);
         return "menu-list";
     }
 
